@@ -1,74 +1,80 @@
+'use client'; // 1. Add use client directive
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Settings2, Sparkles, Zap } from "lucide-react";
+import { Users, Calendar, UserPlus } from "lucide-react";
 import { ReactNode } from "react";
+// 2. Import motion
+import { motion } from "framer-motion";
 
 export default function Features() {
   return (
-    <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
+    // 3. Wrap the section with motion.section and apply animation props
+    <motion.section 
+      className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent"
+      initial={{ opacity: 0, y: 50 }} // Start invisible and slightly below its final position
+      whileInView={{ opacity: 1, y: 0 }} // Animate to fully visible and original position
+      viewport={{ once: true, amount: 0.1 }} // Animation runs only once when 10% of the section is visible
+      transition={{ duration: 0.8, ease: "easeOut" }} // Smooth 0.8 second transition
+    >
       <div className="@container mx-auto max-w-5xl px-6">
+        {/* The rest of the content remains the same */}
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Built to cover your needs
+            Turn Your Tutoring into a Business
           </h2>
-          <p className="mt-4">
-            Libero sapiente aliquam quibusdam aspernatur, praesentium iusto
-            repellendus.
+          <p className="mt-4 text-muted-foreground">
+            Centralized tools to manage students, sessions, and enrollment seamlessly.
           </p>
         </div>
-        <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
+
+        <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 text-center md:mt-16">
+          {/* Card 1 */}
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Zap className="size-6" aria-hidden />
+                <Users className="size-6" aria-hidden />
               </CardDecorator>
-
-              <h3 className="mt-6 font-medium">Customizable</h3>
+              <h3 className="mt-6 font-medium">Your Own Space</h3>
             </CardHeader>
-
             <CardContent>
               <p className="text-sm">
-                Extensive customization options, allowing you to tailor every
-                aspect to meet your specific needs.
+                A dedicated hub where students can view your services, access resources, and connect with you—your tutoring business, all in one place.
               </p>
             </CardContent>
           </Card>
 
+          {/* Card 2 */}
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Settings2 className="size-6" aria-hidden />
+                <Calendar className="size-6" aria-hidden />
               </CardDecorator>
-
-              <h3 className="mt-6 font-medium">You have full control</h3>
+              <h3 className="mt-6 font-medium">Schedule & Task Management</h3>
             </CardHeader>
-
             <CardContent>
-              <p className="mt-3 text-sm">
-                From design elements to functionality, you have complete control
-                to create a unique and personalized experience.
+              <p className="text-sm">
+                Assign tasks, schedule sessions, and track student progress and your hours efficiently—all from one dashboard.
               </p>
             </CardContent>
           </Card>
 
+          {/* Card 3 */}
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Sparkles className="size-6" aria-hidden />
+                <UserPlus className="size-6" aria-hidden />
               </CardDecorator>
-
-              <h3 className="mt-6 font-medium">Powered By AI</h3>
+              <h3 className="mt-6 font-medium">Seamless Enrollment</h3>
             </CardHeader>
-
             <CardContent>
-              <p className="mt-3 text-sm">
-                Elements to functionality, you have complete control to create a
-                unique experience.
+              <p className="text-sm">
+                Students enroll via unique access codes. Manage enrollments, track attendance, and streamline your operations effortlessly.
               </p>
             </CardContent>
           </Card>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

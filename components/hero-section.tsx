@@ -1,143 +1,139 @@
+'use client';
+
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { HeroHeader } from "@/components/hero8-header";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import { HeroDemo } from "@/components/HeroDemo";
+import { motion } from "framer-motion";
+import { ChevronDown } from 'lucide-react'; 
 
 export default function HeroSection() {
+
+  // Vercel Analytics click tracker
+  const trackClick = (eventName: string) => {
+    if (typeof window !== 'undefined' && (window as any).analytics) {
+      (window as any).analytics.track(eventName);
+    } else {
+      console.log(`Tracking event: ${eventName}`);
+    }
+  };
+
   return (
     <>
       <HeroHeader />
       <main className="overflow-x-hidden">
+        {/* Hero Section */}
         <section>
           <div className="pb-24 pt-12 md:pb-32 lg:pb-56 lg:pt-44">
-            <div className="relative mx-auto flex max-w-6xl flex-col px-6 lg:block">
-              <div className="mx-auto max-w-lg text-center lg:ml-0 lg:w-1/2 lg:text-left">
-                <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16 xl:text-7xl">
-                  Ship 10x Faster with NS
+            <div className="relative mx-auto flex max-w-6xl flex-col lg:flex-row items-center px-6">
+              {/* Text Section */}
+              <motion.div
+                className="mx-auto max-w-lg text-center lg:mx-0 lg:w-1/2 lg:text-left"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5 }}
+              >
+                <h1 className="mt-8 text-5xl font-medium md:text-6xl xl:text-7xl">
+                  Scaling Your Tutoring Into a Real Business
                 </h1>
-                <p className="mt-8 max-w-2xl text-pretty text-lg">
-                  Highly customizable components for building modern websites
-                  and applications that look and feel the way you mean it.
+                <p className="mt-6 text-lg text-muted-foreground">
+                  Stop juggling spreadsheets and notebooks. Manage all your students, 
+                  schedule sessions, track progress, and grow your tutoring business 
+                  from one powerful platform.
                 </p>
 
-                <div className="mt-12 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
-                  <Button asChild size="lg" className="px-5 text-base">
-                    <Link href="#link">
-                      <span className="text-nowrap">Start Building</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
+                <div className="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
+                  <Button 
+                    asChild 
+                    size="lg" 
                     className="px-5 text-base"
+                    onClick={() => trackClick("Start Free Trial Click")}
                   >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
+                    <Link href="/free-trial">Start Free Trial</Link>
+                  </Button>
+                  <Button 
+                    asChild 
+                    size="lg" 
+                    variant="ghost" 
+                    className="px-5 text-base"
+                    onClick={() => trackClick("Watch Demo Click")}
+                  >
+                    <Link href="/book-demo">Book Demo</Link>
                   </Button>
                 </div>
-              </div>
-              <Image
-                className="-z-10 order-first ml-auto h-56 w-full object-cover invert sm:h-96 lg:absolute lg:inset-0 lg:-right-20 lg:-top-96 lg:order-last lg:h-max lg:w-2/3 lg:object-contain dark:mix-blend-lighten dark:invert-0"
-                src="https://res.cloudinary.com/dg4jhba5c/image/upload/v1741605150/abstract-bg_wq4f8w.jpg"
-                alt="Abstract Object"
-                height="4000"
-                width="3000"
-              />
+
+                <p className="mt-4 text-sm text-muted-foreground">
+                  ✓ No credit card required • ✓ 7-day free trial • ✓ Cancel anytime
+                </p>
+              </motion.div>
+
+              {/* Demo / Animation Section */}
+              <motion.div
+                className="mb-12 lg:mb-0 lg:ml-12 lg:w-1/2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, delay: 0.3 }}
+              >
+                <HeroDemo />
+              </motion.div>
             </div>
+
+            {/* Scroll Down Indicator */}
+            <motion.div
+              className="absolute bottom-16 left-1/2 hidden -translate-x-1/2 cursor-pointer md:block"
+              animate={{ y: [0, 10, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <Link href="#trusted-slider" aria-label="Scroll down to features">
+                <ChevronDown className="h-8 w-8 text-muted-foreground" />
+              </Link>
+            </motion.div>
           </div>
         </section>
-        <section className="bg-background pb-16 md:pb-32">
-          <div className="group relative m-auto max-w-6xl px-6">
+
+        {/* Trusted Slider Section */}
+        <motion.section
+          id="trusted-slider"
+          className="bg-background pb-16 md:pb-32"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 1.5 }}
+        >
+          <div className="relative m-auto max-w-6xl px-6">
             <div className="flex flex-col items-center md:flex-row">
               <div className="md:max-w-44 md:border-r md:pr-6">
-                <p className="text-end text-sm">Powering the best teams</p>
+                <p className="text-end text-sm">Trusted by 5,000+ tutors</p>
               </div>
               <div className="relative py-6 md:w-[calc(100%-11rem)]">
-                <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-5 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/nvidia.svg"
-                      alt="Nvidia Logo"
-                      height="20"
-                      width="auto"
-                    />
-                  </div>
-
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-4 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/column.svg"
-                      alt="Column Logo"
-                      height="16"
-                      width="auto"
-                    />
-                  </div>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-4 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/github.svg"
-                      alt="GitHub Logo"
-                      height="16"
-                      width="auto"
-                    />
-                  </div>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-5 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/nike.svg"
-                      alt="Nike Logo"
-                      height="20"
-                      width="auto"
-                    />
-                  </div>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-5 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
-                      alt="Lemon Squeezy Logo"
-                      height="20"
-                      width="auto"
-                    />
-                  </div>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-4 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/laravel.svg"
-                      alt="Laravel Logo"
-                      height="16"
-                      width="auto"
-                    />
-                  </div>
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-7 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/lilly.svg"
-                      alt="Lilly Logo"
-                      height="28"
-                      width="auto"
-                    />
-                  </div>
-
-                  <div className="flex">
-                    <img
-                      className="mx-auto h-6 w-fit dark:invert"
-                      src="https://html.tailus.io/blocks/customers/openai.svg"
-                      alt="OpenAI Logo"
-                      height="24"
-                      width="auto"
-                    />
-                  </div>
+                <InfiniteSlider speedOnHover={10} speed={20} gap={112}>
+                  {[
+                    "Sarah M.• Math Tutor",
+                    "Michael C.• Physics",
+                    "Emma W.• Languages",
+                    "David L.• Chemistry",
+                    "Lisa K.• Music",
+                    "James P.• Computer Science",
+                    "Rachel T.• Biology",
+                    "Alex R.• History"
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center mr-8">
+                      <span className="text-lg font-semibold dark:text-white">{item.split("•")[0]}</span>
+                      <span className="ml-2 text-sm text-muted-foreground">• {item.split("•")[1]}</span>
+                    </div>
+                  ))}
                 </InfiniteSlider>
 
-                <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20"></div>
-                <div className="bg-linear-to-l from-background absolute inset-y-0 right-0 w-20"></div>
+                {/* Edge fades */}
+                <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20 pointer-events-none"></div>
+                <div className="bg-linear-to-l from-background absolute inset-y-0 right-0 w-20 pointer-events-none"></div>
                 <ProgressiveBlur
                   className="pointer-events-none absolute left-0 top-0 h-full w-20"
                   direction="left"
@@ -151,7 +147,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
     </>
   );
