@@ -35,9 +35,14 @@ function EmailModal({ open, onClose, onSubmit }) {
       <div className="bg-white dark:bg-zinc-900 rounded-xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center justify-center">
         {!submitted ? (
           <>
-            <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white text-center">
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 dark:text-white text-center">
               Enter Your Email
             </h2>
+
+            <p className="text-center text-zinc-600 dark:text-zinc-400 mb-4">
+              We will verify your email and contact you shortly to complete your signup.
+            </p>
+
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
               <input
                 type="email"
@@ -62,7 +67,7 @@ function EmailModal({ open, onClose, onSubmit }) {
           <div className="flex flex-col items-center gap-4">
             <CheckCircle className="text-green-500 w-16 h-16" />
             <p className="text-center text-zinc-900 dark:text-white text-lg">
-              Thank you! We will send an email to complete your signup.
+              Thank you! We will verify your email and contact you shortly.
             </p>
           </div>
         )}
