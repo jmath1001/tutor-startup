@@ -4,150 +4,82 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeroHeader } from "@/components/hero8-header";
-import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
-import { HeroDemo } from "@/components/HeroDemo";
 import { motion } from "framer-motion";
-import { ChevronDown } from 'lucide-react'; 
+import { Search, Zap, MessageSquare } from 'lucide-react'; 
+import { HeroDemo } from "./HeroDemo";
 
 export default function HeroSection() {
-
-  // Vercel Analytics click tracker
-  const trackClick = (eventName: string) => {
-    if (typeof window !== 'undefined' && (window as any).analytics) {
-      (window as any).analytics.track(eventName);
-    } else {
-      console.log(`Tracking event: ${eventName}`);
-    }
-  };
-
   return (
     <>
       <HeroHeader />
-      <main className="overflow-x-hidden">
-        {/* Hero Section */}
-        <section>
-          <div className="pb-24 pt-12 md:pb-32 lg:pb-56 lg:pt-44">
-            <div className="relative mx-auto flex max-w-6xl flex-col lg:flex-row items-center px-6">
-              {/* Text Section */}
-              <motion.div
-                className="mx-auto max-w-lg text-center lg:mx-0 lg:w-1/2 lg:text-left"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5 }}
-              >
-                <h1 className="mt-8 text-5xl font-medium md:text-6xl xl:text-7xl">
-                  Scaling Your Tutoring Into a Real Business
-                </h1>
-                <p className="mt-6 text-lg text-muted-foreground">
-                  Stop juggling spreadsheets and notebooks. Manage all your students, 
-                  schedule sessions, track progress, and grow your tutoring business 
-                  from one powerful platform.
-                </p>
-
-                <div className="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row lg:justify-start">
-                  <Button 
-                    asChild 
-                    size="lg" 
-                    className="px-5 text-base"
-                    onClick={() => trackClick("Start Free Trial Click")}
-                  >
-                    <Link href="/free-trial">Start Free Trial</Link>
-                  </Button>
-                  <Button 
-                    asChild 
-                    size="lg" 
-                    variant="ghost" 
-                    className="px-5 text-base"
-                    onClick={() => trackClick("Watch Demo Click")}
-                  >
-                    <Link href="/book-demo">Book Demo</Link>
-                  </Button>
-                </div>
-
-                <p className="mt-4 text-sm text-muted-foreground">
-                  ✓ No credit card required • ✓ 7-day free trial • ✓ Cancel anytime
-                </p>
-              </motion.div>
-
-              {/* Demo / Animation Section */}
-              <motion.div
-                className="mb-12 lg:mb-0 lg:ml-12 lg:w-1/2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, delay: 0.3 }}
-              >
-                <HeroDemo />
-              </motion.div>
-            </div>
-
-            {/* Scroll Down Indicator */}
+      <main className="overflow-x-hidden bg-[#fafafa]">
+        <section className="pb-24 pt-12 md:pb-32 lg:pt-24 border-b-8 border-slate-900">
+          <div className="relative mx-auto flex max-w-7xl flex-col lg:flex-row items-center px-6 gap-12">
+            
+            {/* TEXT SECTION */}
             <motion.div
-              className="absolute bottom-16 left-1/2 hidden -translate-x-1/2 cursor-pointer md:block"
-              animate={{ y: [0, 10, 0] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              className="mx-auto max-w-2xl text-center lg:mx-0 lg:w-1/2 lg:text-left z-10"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              <Link href="#trusted-slider" aria-label="Scroll down to features">
-                <ChevronDown className="h-8 w-8 text-muted-foreground" />
-              </Link>
+              <div className="inline-block bg-slate-900 text-white px-4 py-1 border-2 border-slate-900 font-black uppercase italic text-xs tracking-widest mb-6">
+                Stop Spreadsheet Chaos
+              </div>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 uppercase italic tracking-tight leading-snug mb-6">
+                Schedule Minus the Hair Pulling
+              </h1>
+              
+              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed mb-10 max-w-xl">
+                Our software replaces spreadsheets, texts, and endless hair pulling. Quickly match student requests with tutor availability, reduce one-on-one session costs, and manage scheduling conflicts with a few clicks.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <Button
+                  asChild
+                  className="h-16 px-8 border-4 border-slate-900 bg-emerald-500 text-slate-900 text-lg font-black uppercase italic tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1"
+                >
+                  <Link href="/free-trial" className="flex items-center gap-2">
+                    Get Started <Search size={20} />
+                  </Link>
+                </Button>
+                <p className="text-slate-400 font-black uppercase italic text-xs tracking-tight text-center sm:text-left">
+                  All tutor schedules synced in real-time
+                </p>
+              </div>
+
+              {/* PAIN RELIEVERS */}
+              <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-4 border-4 border-slate-900 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                   <Zap className="text-emerald-500 shrink-0" size={24} />
+                   <span className="font-black uppercase italic text-sm text-slate-900">
+                     Subject & Availability Filtering
+                   </span>
+                </div>
+                <div className="flex items-center gap-3 p-4 border-4 border-slate-900 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                   <MessageSquare className="text-blue-500 shrink-0" size={24} />
+                   <span className="font-black uppercase italic text-sm text-slate-900">
+                     Auto-Sync Individual Schedules to Tutors
+                   </span>
+                </div>
+              </div>
             </motion.div>
+
+            {/* VISUAL SECTION */}
+            <motion.div
+              className="lg:w-1/2 relative w-full mt-12 lg:mt-0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="border-8 border-slate-900 shadow-[20px_20px_0px_0px_rgba(0,0,0,0.05)] bg-white overflow-hidden">
+                <HeroDemo />
+              </div>
+            </motion.div>
+
           </div>
         </section>
-
-        {/* Trusted Slider Section */}
-        <motion.section
-          id="trusted-slider"
-          className="bg-background pb-16 md:pb-32"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 1.5 }}
-        >
-          <div className="relative m-auto max-w-6xl px-6">
-            <div className="flex flex-col items-center md:flex-row">
-              <div className="md:max-w-44 md:border-r md:pr-6">
-                <p className="text-end text-sm">Trusted by 5,000+ tutors</p>
-              </div>
-              <div className="relative py-6 md:w-[calc(100%-11rem)]">
-                <InfiniteSlider speedOnHover={10} speed={20} gap={112}>
-                  {[
-                    "Sarah M.• Math Tutor",
-                    "Michael C.• Physics",
-                    "Emma W.• Languages",
-                    "David L.• Chemistry",
-                    "Lisa K.• Music",
-                    "James P.• Computer Science",
-                    "Rachel T.• Biology",
-                    "Alex R.• History"
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center mr-8">
-                      <span className="text-lg font-semibold dark:text-white">{item.split("•")[0]}</span>
-                      <span className="ml-2 text-sm text-muted-foreground">• {item.split("•")[1]}</span>
-                    </div>
-                  ))}
-                </InfiniteSlider>
-
-                {/* Edge fades */}
-                <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20 pointer-events-none"></div>
-                <div className="bg-linear-to-l from-background absolute inset-y-0 right-0 w-20 pointer-events-none"></div>
-                <ProgressiveBlur
-                  className="pointer-events-none absolute left-0 top-0 h-full w-20"
-                  direction="left"
-                  blurIntensity={1}
-                />
-                <ProgressiveBlur
-                  className="pointer-events-none absolute right-0 top-0 h-full w-20"
-                  direction="right"
-                  blurIntensity={1}
-                />
-              </div>
-            </div>
-          </div>
-        </motion.section>
       </main>
     </>
   );
