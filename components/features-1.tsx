@@ -1,130 +1,105 @@
 'use client';
 
-import { Card } from "@/components/ui/card";
+import React from "react";
 import { motion } from "framer-motion";
-import { Zap, AlertTriangle, Users2, RotateCcw } from "lucide-react";
+import { Zap, BellRing, RotateCcw } from "lucide-react"; // Swapped Alert for BellRing
+
+const FeatureVideo = ({ src }: { src: string }) => (
+  <div className="relative w-full aspect-video bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-2xl">
+    <video 
+      key={src}
+      autoPlay 
+      loop 
+      muted 
+      playsInline 
+      className="w-full h-full object-cover"
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+    <div className="absolute inset-0 pointer-events-none rounded-2xl ring-1 ring-inset ring-slate-900/10" />
+  </div>
+);
 
 export default function Features() {
+  const features = [
+    {
+      icon: <Zap size={28} className="text-emerald-500" />,
+      title: "Auto-Sync Matchmaking",
+      description: "The 'Availability Text' tag is dead. Our engine automatically scans live tutor calendars against student requests. Match the perfect pair in one click.",
+      video: "/videos/sync-demo.mp4",
+    },
+    {
+      icon: <BellRing size={28} className="text-rose-500" />,
+      title: "Zero-Confusion Sync",
+      description: "Kill the 'I didn't know I was working' excuse for good. Tutors get their own live-synced dashboard that updates the second you assign a session. Clear communication, zero friction.",
+      video: "/videos/tracking-demo.mp4", // This is your video showing the tutor side/dashboard
+      reverse: true 
+    },
+    {
+      icon: <RotateCcw size={28} className="text-blue-500" />,
+      title: "Easy Rescheduling",
+      description: "When a tutor gets sick, you shouldn't have to panic. Instantly see every verified backup for that specific subject and reassign the session in seconds.",
+      video: "/videos/reschedule-demo.mp4",
+    }
+  ];
+
   return (
-    <motion.section 
-      className="bg-[#fafafa] py-24 md:py-32" 
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-    >
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Aggressive Heading */}
-        <div className="text-center mb-24">
-          <h2 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic leading-[0.9]">
-            Ditch the <span className="text-emerald-500 underline decoration-8 underline-offset-4">Spreadsheets.</span> <br />
-            <span className="text-slate-400 text-3xl">Stop Chasing. Start Scaling.</span>
+    <section className="relative bg-[#fafafa] py-24 md:py-40 overflow-hidden">
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#000 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mb-32"
+        >
+          <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase italic leading-[0.85] mb-8">
+            Built for <span className="text-emerald-500">Scale</span>,<br /> 
+            Not Stress.
           </h2>
-          <p className="mt-8 text-lg text-slate-600 max-w-2xl mx-auto font-medium">
-            You’re an agency owner, not a data entry clerk. We replace 15 Excel tabs and 100 text threads with a single, automated source of truth.
+          <p className="text-xl text-slate-600 font-medium border-l-4 border-slate-900 pl-6">
+            Eliminate administrative blind spots and keep your tutors in the loop 
+            with real-time schedule syncing.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* 1. THE AUTOMATED MATCHMAKER */}
-          <Card className="relative p-8 border-2 border-slate-900 bg-white shadow-[8px_8px_0px_0px_rgba(16,185,129,1)] group">
-            <div className="mb-6 flex items-center justify-center w-12 h-12 bg-emerald-500 rounded-lg text-white">
-              <Zap size={24} fill="currentColor" />
-            </div>
-            
-            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 mb-4">
-              Auto-Sync Matchmaking
-            </h3>
-            
-            <p className="text-sm font-medium text-slate-500 leading-relaxed mb-8">
-              Forget the "Availability Text" tag. Our engine <span className="text-slate-900 font-bold">automatically scans</span> live tutor calendars against student requests. It shows multiple verified matches so you can choose the best fit—no manual checking required.
-            </p>
-
-            {/* Visual: Multiple Tutor Options */}
-            <div className="relative p-4 rounded-xl bg-slate-50 border border-slate-100 overflow-hidden space-y-2">
-              {[
-                { tutor: "Sarah L.", time: "Tue @ 4:00 PM", best: true },
-                { tutor: "Marcus V.", time: "Wed @ 5:30 PM" },
-                { tutor: "Elena W.", time: "Thu @ 3:00 PM" },
-              ].map((opt, i) => (
-                <div
-                  key={i}
-                  className={`p-2 rounded-lg flex justify-between items-center border transition-all
-                    ${opt.best
-                      ? "bg-emerald-500/20 border-emerald-500"
-                      : "bg-white/5 border-white/10"
-                    }`}
-                >
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase text-slate-900">
-                      {opt.tutor}
-                    </span>
-                    <span className="text-[8px] font-bold text-slate-500">
-                      {opt.time}
-                    </span>
-                  </div>
-                  {opt.best && (
-                    <span className="text-[8px] font-black text-emerald-500 uppercase">
-                      Recommended
-                    </span>
-                  )}
+        <div className="space-y-32 md:space-y-52">
+          {features.map((feature, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-150px" }}
+              transition={{ duration: 0.8 }}
+              className={`flex flex-col gap-12 lg:gap-24 items-center ${feature.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+            >
+              <div className="w-full lg:w-[45%] space-y-6">
+                <div className="inline-flex p-3 bg-white rounded-2xl shadow-sm border border-slate-100">
+                  {feature.icon}
                 </div>
-              ))}
-            </div>
-          </Card>
-
-          {/* 2. THE HOUR BANK PROTECTOR */}
-          <Card className="relative p-8 border-2 border-slate-900 bg-slate-900 shadow-[8px_8px_0px_0px_rgba(244,63,94,1)]">
-            <div className="mb-6 flex items-center justify-center w-12 h-12 bg-rose-500 rounded-lg text-white">
-              <AlertTriangle size={24} />
-            </div>
-            
-            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-4">
-              Rules-Based Tracking
-            </h3>
-            
-            <p className="text-sm font-medium text-slate-400 leading-relaxed mb-8">
-              Set your own rules for unexcused absences, late cancellations, and other policies. The system <span className="text-rose-400 font-bold">auto-tracks hours</span> and flags discrepancies instantly.
-            </p>
-
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="flex justify-between text-[10px] font-black uppercase text-rose-400 mb-2">
-                <span>Student Balance</span>
-                <span>0.0 HRS</span>
+                <h3 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-slate-900 leading-tight">
+                  {feature.title}
+                </h3>
+                <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <div className="flex gap-1">
-                {[1,2,3,4,5].map(i => <div key={i} className="h-2 flex-1 bg-rose-500/20 rounded-full" />)}
-              </div>
-              <p className="mt-3 text-[9px] font-bold text-white/40 uppercase">Action Required: Refill Link Sent</p>
-            </div>
-          </Card>
 
-          {/* 3. EASY RESCHEDULING */}
-          <Card className="relative p-8 border-2 border-slate-900 bg-white shadow-[8px_8px_0px_0px_rgba(15,23,42,1)]">
-            <div className="mb-6 flex items-center justify-center w-12 h-12 bg-slate-900 rounded-lg text-white">
-              <RotateCcw size={24} />
-            </div>
-            
-            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 mb-4">
-              Easy Rescheduling
-            </h3>
-            
-            <p className="text-sm font-medium text-slate-500 leading-relaxed mb-8">
-              Any conflict or unexpected unavailability? Our system instantly shows all <span className="text-slate-900 font-bold">verified backup tutors</span> for that subject and time. One click to reassign and notify everyone.
-            </p>
-
-            <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
-              <div className="flex -space-x-2">
-                <div className="w-6 h-6 rounded-full bg-emerald-500 border-2 border-white" />
-                <div className="w-6 h-6 rounded-full bg-slate-300 border-2 border-white" />
-                <div className="w-6 h-6 rounded-full bg-slate-300 border-2 border-white" />
-              </div>
-              <span className="text-[10px] font-black uppercase text-slate-400">3 Eligible Backups</span>
-            </div>
-          </Card>
-
+              <motion.div 
+                whileHover={{ scale: 1.01 }}
+                className="w-full lg:w-[55%]"
+              >
+                <FeatureVideo src={feature.video} />
+              </motion.div>
+            </motion.div>
+          ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
