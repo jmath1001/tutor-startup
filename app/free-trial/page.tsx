@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Zap, ShieldCheck, X, Loader2, Coffee, ArrowLeft } from "lucide-react";
+import { CheckCircle, Zap, ShieldCheck, X, Loader2, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 /**
@@ -62,19 +62,19 @@ function EmailModal({ open, onClose, onSubmit, plan }) {
                 className="w-full border-4 border-slate-900 p-4 font-bold text-slate-900 focus:outline-none focus:bg-emerald-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               />
               <Button type="submit" disabled={loading} className="w-full h-16 bg-slate-900 text-white font-black uppercase italic tracking-widest text-lg hover:bg-emerald-500 transition-all">
-                {loading ? <Loader2 className="animate-spin mr-2" /> : "Deploy My Engine"}
+                {loading ? <Loader2 className="animate-spin mr-2" /> : "Start My Free Trial"}
               </Button>
               <p className="text-[10px] text-center font-bold text-slate-400 uppercase tracking-tight italic">
-                7-Day Free Trial • Cancel Anytime
+                7-Day Free Trial • We handle the data migration
               </p>
             </form>
           </>
         ) : (
           <div className="flex flex-col items-center py-10 text-center">
             <CheckCircle size={60} className="text-emerald-500 mb-4" />
-            <h3 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Thetix Deployed.</h3>
+            <h3 className="text-3xl font-black text-slate-900 uppercase italic tracking-tighter mb-2">Spot Reserved.</h3>
             <p className="text-slate-600 font-bold text-sm">
-              I’m personally setting up your instance now. Check your email for the migration details.
+              I’m personally setting up your instance now. Check your email for the next steps.
             </p>
           </div>
         )}
@@ -87,19 +87,29 @@ export default function FreeTrialPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
+  const logEvent = async (name: string, plan: string) => {
+    try {
+      await supabase.from('analytics_events').insert([{ 
+        event_name: name, 
+        metadata: { plan: plan } 
+      }]);
+    } catch (e) { console.error(e); }
+  };
+
   const handleEmailSubmit = async (email: string) => {
     try {
-      const { data, error } = await supabase
+      await supabase
         .from('trial_signups')
-        .insert([{ email, plan: selectedPlan, status: 'pending' }])
-        .select();
-      if (error) console.error("❌ Database Error:", error.message);
+        .insert([{ email, plan: selectedPlan, status: 'pending' }]);
+      
+      await logEvent('conversion_success', selectedPlan);
     } catch (err) {
-      console.error("💀 Critical Failure:", err);
+      console.error("Critical Failure:", err);
     }
   };
 
   const openPlanModal = (planName: string) => {
+    logEvent('pricing_tier_click', planName);
     setSelectedPlan(planName);
     setModalOpen(true);
   };
@@ -107,7 +117,6 @@ export default function FreeTrialPage() {
   return (
     <main className="bg-[#fafafa] min-h-screen py-12 selection:bg-emerald-500 selection:text-white relative">
       
-      {/* NAV */}
       <nav className="max-w-6xl mx-auto px-6 mb-8">
         <Link href="/" className="inline-flex items-center gap-2 group">
           <div className="w-10 h-10 bg-white border-2 border-slate-900 rounded-xl flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:bg-slate-900 group-hover:text-white transition-all">
@@ -117,7 +126,6 @@ export default function FreeTrialPage() {
         </Link>
       </nav>
 
-      {/* HERO */}
       <section className="max-w-6xl mx-auto px-6 mb-12 text-center">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <div className="inline-block bg-slate-900 text-white px-3 py-0.5 font-black uppercase italic text-[10px] tracking-[0.2em] mb-4">
@@ -127,12 +135,11 @@ export default function FreeTrialPage() {
             Pick Your <span className="text-emerald-500">Tier.</span>
           </h1>
           <p className="max-w-xl mx-auto text-lg font-bold text-slate-500 leading-tight">
-            Switch your agency to Thetix. We handle 100% of the migration and data entry for you.
+            Switch your agency to Thetix. We handle 100% of the migration for you.
           </p>
         </motion.div>
       </section>
 
-      {/* GRID */}
       <section className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         
         {/* CORE */}
@@ -152,7 +159,7 @@ export default function FreeTrialPage() {
             </ul>
           </div>
           <Button onClick={() => openPlanModal("Core")} className="w-full h-16 border-4 border-slate-900 bg-white text-slate-900 font-black uppercase italic tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            Get Core
+            Start My Trial
           </Button>
         </div>
 
@@ -176,20 +183,16 @@ export default function FreeTrialPage() {
             </ul>
           </div>
           <Button onClick={() => openPlanModal("Pro")} className="w-full h-16 bg-slate-900 text-white font-black uppercase italic tracking-widest hover:bg-emerald-500 transition-all shadow-[4px_4px_0px_0px_rgba(16,185,129,1)]">
-            Deploy Pro
+            Claim My Pro Spot
           </Button>
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="mt-24 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
            <p className="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em]">Thetix Systems Inc.</p>
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-           Built for Scale. © 2026
-        </p>
       </footer>
 
       <AnimatePresence>
