@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react"; // Adjusted import to standard Vercel package
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,19 +15,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tutor Terminal",
-  description: "Scale your tutoring business — manage students, assign worksheets, and grow efficiently.",
+  title: "Thetix | Agency Scheduling Engine",
+  description: "The high-performance scheduling and matching engine for tutoring agencies. Stop the spreadsheet hunt.",
+  metadataBase: new URL('https://thetix.dev'),
   openGraph: {
-    title: "Tutor Terminal",
-    description: "Scale your tutoring business — manage students, assign worksheets, and grow efficiently.",
-    url: "https://www.yoursite.com",
-    siteName: "Tutor Terminal",
+    title: "Thetix | Agency Command Engine",
+    description: "Scale your tutoring agency without the manual chaos. Precision matching and scheduling.",
+    url: "https://thetix.dev",
+    siteName: "Thetix",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png", // Ensure this exists in your /public folder for Discord/Twitter previews
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Tutor Terminal",
-    description: "Scale your tutoring business — manage students, assign worksheets, and grow efficiently.",
+    card: "summary_large_image",
+    title: "Thetix | Agency Command Engine",
+    description: "The high-performance scheduling and matching engine for tutoring agencies.",
+  },
+  icons: {
+    icon: "/favicon.ico", // Or /icon.png
   },
 };
 
@@ -43,15 +54,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light" // Set to light if you want that high-contrast white look by default
           enableSystem
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
-
-        {/* Global Vercel Analytics */}
-        <Analytics />
       </body>
     </html>
   );
