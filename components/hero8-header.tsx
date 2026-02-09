@@ -46,7 +46,7 @@ export const HeroHeader = () => {
                 asChild 
                 className="h-12 border-4 border-slate-900 bg-emerald-500 text-slate-900 font-black uppercase italic text-xs tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-900 hover:text-white transition-all active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
               >
-                <Link href="/free-trial">Deploy Now</Link>
+                <Link href="/free-trial">Start Now</Link>
               </Button>
             </div>
 

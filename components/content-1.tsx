@@ -69,7 +69,7 @@ export default function CalendarZoomSection() {
                        <Search size={18} />
                     </div>
                     <span className="text-xs font-black uppercase text-slate-500 group-hover:text-emerald-700 tracking-tight">
-                      Find Backup Cover...
+                      Find Alternative Cover...
                     </span>
                   </div>
                   <MousePointer2 size={20} className="text-slate-900 fill-slate-900 animate-bounce" />
@@ -87,7 +87,7 @@ export default function CalendarZoomSection() {
                   <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
                     <CheckCircle2 size={12} className="text-white" />
                   </div>
-                  <span className="text-[10px] font-black uppercase text-slate-900">3 Eligible Backups Found</span>
+                  <span className="text-[10px] font-black uppercase text-slate-900">3 Eligible Tutors Found</span>
                 </div>
                 
                 <div className="space-y-3">

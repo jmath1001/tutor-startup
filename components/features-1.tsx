@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Zap, BellRing, RotateCcw } from "lucide-react"; // Swapped Alert for BellRing
+import { Zap, BellRing, RotateCcw } from "lucide-react";
 
 const FeatureVideo = ({ src }: { src: string }) => (
   <div className="relative w-full aspect-video bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-2xl">
@@ -31,8 +31,8 @@ export default function Features() {
     {
       icon: <BellRing size={28} className="text-rose-500" />,
       title: "Zero-Confusion Sync",
-      description: "Kill the 'I didn't know I was working' excuse for good. Tutors get their own live-synced dashboard that updates the second you assign a session. Clear communication, zero friction.",
-      video: "/videos/tracking-demo.mp4", // This is your video showing the tutor side/dashboard
+      description: "No more tutor and student availability juggling. The system will compare both to suggest open slots. Tutors can view their sessions and add their availability.",
+      video: "/videos/tracking-demo.mp4",
       reverse: true 
     },
     {
@@ -56,7 +56,7 @@ export default function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mb-32"
+          className="max-w-3xl mb-20 md:mb-32"
         >
           <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter uppercase italic leading-[0.85] mb-8">
             Built for <span className="text-emerald-500">Scale</span>,<br /> 
@@ -68,7 +68,7 @@ export default function Features() {
           </p>
         </motion.div>
 
-        <div className="space-y-32 md:space-y-52">
+        <div className="space-y-24 md:space-y-40">
           {features.map((feature, index) => (
             <motion.div 
               key={index}
@@ -76,23 +76,25 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-150px" }}
               transition={{ duration: 0.8 }}
-              className={`flex flex-col gap-12 lg:gap-24 items-center ${feature.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+              className={`flex flex-col gap-8 lg:gap-12 items-center ${feature.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
-              <div className="w-full lg:w-[45%] space-y-6">
+              {/* Text Section - Smaller on desktop */}
+              <div className="w-full lg:w-[35%] space-y-6">
                 <div className="inline-flex p-3 bg-white rounded-2xl shadow-sm border border-slate-100">
                   {feature.icon}
                 </div>
-                <h3 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-slate-900 leading-tight">
+                <h3 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-slate-900 leading-tight">
                   {feature.title}
                 </h3>
-                <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed">
+                <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed">
                   {feature.description}
                 </p>
               </div>
 
+              {/* Video Section - Much Larger on desktop */}
               <motion.div 
                 whileHover={{ scale: 1.01 }}
-                className="w-full lg:w-[55%]"
+                className="w-full lg:w-[65%]"
               >
                 <FeatureVideo src={feature.video} />
               </motion.div>
