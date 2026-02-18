@@ -28,7 +28,7 @@ export default function HeroSection() {
             >
               <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full font-bold uppercase text-[10px] tracking-widest mb-8 border border-emerald-100">
                 <Zap size={14} fill="currentColor" />
-                The Smarter Way to Scale
+                The Smarter Way to Schedule
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9] mb-8 uppercase italic">
@@ -38,7 +38,7 @@ export default function HeroSection() {
               </h1>
               
               <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
-                Stop playing calendar tetris. We replace the mess of spreadsheets and texts with a single, automated source of truth for your tutors and students.
+                Stop playing calendar tetris. It's time to ditch the spreadsheets and texts with a single, automated source of truth for your tutors and students.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -47,7 +47,7 @@ export default function HeroSection() {
                   className="h-16 px-10 bg-slate-900 text-white text-lg font-black uppercase italic tracking-widest rounded-2xl hover:bg-emerald-500 hover:text-slate-900 transition-all shadow-2xl active:scale-95 group"
                 >
                   <Link href="/free-trial" className="flex items-center gap-3">
-                    Start Your Portal <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    Reserve My Spot <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 

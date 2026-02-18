@@ -374,7 +374,6 @@ export default function WaitlistPage() {
       </section>
 
       {/* Testimonials */}
-      <TestimonialCarousel />
 
       <AnimatePresence>
         {modalOpen && (

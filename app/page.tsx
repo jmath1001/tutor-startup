@@ -14,7 +14,6 @@ export default function Home() {
       <ContentSection />
       <MigrationProcess />
       <CallToAction />
-      <TestimonialCarousel />
       <FooterSection />
     </>
   );

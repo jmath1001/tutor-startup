@@ -8,30 +8,30 @@ export default function MigrationProcess() {
   const steps = [
     {
       icon: <FileSpreadsheet size={32} className="text-emerald-500" />,
-      title: "System Analysis",
-      description: "We hop on a quick call to understand your current setup—Excel sheets, Google Sheets, CRM, or whatever you're using right now.",
-      detail: "No judgment. We've seen it all.",
+      title: "Join the Waitlist",
+      description: "Drop your email and we'll reach out personally. No automated emails, just a real conversation about whether this fits your center.",
+      detail: "Takes 30 seconds.",
       color: "emerald"
     },
     {
       icon: <Users size={32} className="text-blue-500" />,
-      title: "Data Migration",
-      description: "We handle the heavy lifting. Send us your spreadsheets and we'll import all your tutors, students, and existing schedules into the system.",
-      detail: "Usually takes 2-3 hours, not weeks.",
+      title: "Quick Demo Call",
+      description: "We'll show you exactly how it works and walk through your current scheduling setup. If it's not a fit we'll tell you straight up.",
+      detail: "30 minutes, no sales pitch.",
       color: "blue"
     },
     {
       icon: <Rocket size={32} className="text-purple-500" />,
-      title: "Team Onboarding",
-      description: "We'll walk your admin team through the dashboard and show your tutors how to use their personal portals. Everyone gets up to speed fast.",
-      detail: "1-hour training session included.",
+      title: "Free Early Access",
+      description: "Beta centers get the full product free while we build it out together. Your feedback directly shapes what gets built next.",
+      detail: "Free during beta. No catch.",
       color: "purple"
     },
     {
       icon: <Calendar size={32} className="text-rose-500" />,
-      title: "Go Live",
-      description: "Start scheduling. We monitor the first week to make sure everything runs smoothly and handle any tweaks needed.",
-      detail: "You're in control from day one.",
+      title: "You're Running",
+      description: "Your schedule is live, tutors have their portals, and students can see their sessions. We stay close during the first few weeks.",
+      detail: "We don't disappear after setup.",
       color: "rose"
     }
   ];
@@ -60,16 +60,16 @@ export default function MigrationProcess() {
         >
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-50 to-cyan-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
             <CheckCircle size={16} />
-            <span>White-Glove Migration</span>
+            <span>Early Access Beta</span>
           </div>
           <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-            From Spreadsheet Chaos to <br />
+            Be One of the First Centers to <br />
             <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-              Structured System
+              Ditch the Spreadsheet
             </span>
           </h2>
           <p className="text-xl text-slate-600 leading-relaxed">
-            We've migrated dozens of tutoring centers. Here's exactly how we'll get you up and running—no stress, no downtime.
+            We're onboarding a small group of tutoring centers for free early access. You get the full product, we get real feedback. Here's how it works.
           </p>
         </motion.div>
 
@@ -96,7 +96,7 @@ export default function MigrationProcess() {
                 </div>
 
                 {/* Icon */}
-                <div className={`w-16 h-16 bg-gradient-to-br ${colorMap[step.color]} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}>
+                <div className={`w-16 h-16 bg-gradient-to-br ${colorMap[step.color as keyof typeof colorMap]} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}>
                   <div className="text-white">
                     {step.icon}
                   </div>
@@ -119,7 +119,7 @@ export default function MigrationProcess() {
           ))}
         </div>
 
-        {/* Timeline estimate */}
+        {/* Bottom banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -128,10 +128,10 @@ export default function MigrationProcess() {
           className="bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-2xl p-8 border border-emerald-100 text-center"
         >
           <p className="text-slate-700 font-medium mb-2">
-            <span className="text-2xl font-bold text-slate-900">5-7 days</span> from kickoff to go-live
+            <span className="text-2xl font-bold text-slate-900">Spots are limited</span> during beta
           </p>
           <p className="text-sm text-slate-600">
-            Most centers are fully operational within a week. No payment until you're running live.
+            Free for early access centers. No payment, no commitment — just tell us it works.
           </p>
         </motion.div>
 

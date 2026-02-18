@@ -27,17 +27,14 @@ export const HeroHeader = () => {
               </div>
             </div>
 
-            {/* NAV LINKS - BRUTAL STYLE */}
+            {/* NAV LINKS */}
             <div className="hidden md:flex items-center gap-8">
-              {["Demo", "Pricing"].map((item) => (
-                <Link 
-                  key={item}
-                  href={item === "Pricing" ? "/free-trial" : "#demo"} 
-                  className="text-xs font-black uppercase italic tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
-                >
-                  {item}
-                </Link>
-              ))}
+              <Link 
+                href="/demo-video"
+                className="text-xs font-black uppercase italic tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
+              >
+                Full Demo
+              </Link>
             </div>
 
             {/* CTA */}
@@ -46,7 +43,7 @@ export const HeroHeader = () => {
                 asChild 
                 className="h-12 border-4 border-slate-900 bg-emerald-500 text-slate-900 font-black uppercase italic text-xs tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-900 hover:text-white transition-all active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
               >
-                <Link href="/free-trial">Start Now</Link>
+                <Link href="/free-trial">Get Early Access</Link>
               </Button>
             </div>
 
