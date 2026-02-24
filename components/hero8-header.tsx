@@ -3,49 +3,31 @@
 import Link from "next/link";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/trackEvent";
 import React from "react";
 
 export const HeroHeader = () => {
   return (
     <header>
-      <nav className="bg-white fixed z-50 w-full border-b-4 border-slate-900 shadow-[0_4px_0_0_rgba(0,0,0,0.05)]">
+      <nav className="bg-white fixed z-50 w-full border-b border-slate-200 shadow-sm">
         <div className="mx-auto max-w-7xl px-6">
           <div className="relative flex items-center justify-between py-4">
-            
-            {/* LOGO & STATUS */}
-            <div className="flex items-center gap-6">
-              <Link href="/" aria-label="home" className="flex items-center space-x-2 group">
-                <Logo />
-                <span className="hidden sm:block font-black text-2xl uppercase italic tracking-tighter text-slate-900 group-hover:text-emerald-500 transition-colors">
-                  THETIX
-                </span>
-              </Link>
-              
-              <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-slate-100 border-2 border-slate-900 rounded-full">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">System Live</span>
-              </div>
-            </div>
 
-            {/* NAV LINKS */}
-            <div className="hidden md:flex items-center gap-8">
-              <Link 
-                href="/demo-video"
-                className="text-xs font-black uppercase italic tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
-              >
-                Full Demo
-              </Link>
-            </div>
+            {/* LOGO */}
+            <Link href="/" aria-label="home" className="flex items-center gap-2 group">
+              <Logo />
+              <span className="hidden sm:block font-black text-xl tracking-tight text-slate-900 group-hover:text-emerald-500 transition-colors">
+                Thetix
+              </span>
+            </Link>
 
             {/* CTA */}
-            <div className="flex items-center gap-4">
-              <Button 
-                asChild 
-                className="h-12 border-4 border-slate-900 bg-emerald-500 text-slate-900 font-black uppercase italic text-xs tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-900 hover:text-white transition-all active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
-              >
-                <Link href="/free-trial">Get Early Access</Link>
-              </Button>
-            </div>
+            <Button
+              asChild
+              className="h-11 px-6 bg-slate-900 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-emerald-500 hover:text-slate-900 transition-all shadow-md active:scale-95"
+            >
+              <Link href="/free-trial" onClick={() => trackEvent("nav_cta_click")}>Book a Free Call</Link>
+            </Button>
 
           </div>
         </div>

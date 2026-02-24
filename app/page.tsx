@@ -5,14 +5,14 @@ import CallToAction from "@/components/call-to-action";
 import FooterSection from "@/components/footer";
 import MigrationProcess from "@/components/MigrationProcess";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
+import CredibilitySection from "@/components/CredibilitySection";
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <Features />
-      <ContentSection />
       <MigrationProcess />
+      <CredibilitySection />
       <CallToAction />
       <FooterSection />
     </>

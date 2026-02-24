@@ -1,47 +1,34 @@
 'use client';
 
-import { ArrowRight, Zap, MessageSquare, Gift, Clock } from "lucide-react";
+import { ArrowRight, Zap, MessageSquare, CalendarCheck, Shield } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { supabase } from "@/lib/supabase";
+import { trackEvent } from "@/lib/trackEvent";
 
 const perks = [
   {
-    icon: <Gift size={20} className="text-emerald-400" />,
-    title: "Free During Beta",
-    body: "Full product, no credit card.",
+    icon: <CalendarCheck size={20} className="text-emerald-400" />,
+    title: "We Handle the Setup",
+    body: "Bring your spreadsheet or CRM. We move everything over on the call with you.",
+  },
+  {
+    icon: <Shield size={20} className="text-emerald-400" />,
+    title: "Nothing Gets Lost",
+    body: "Every student, tutor, and session comes with you. We don't go live until you're confident.",
   },
   {
     icon: <Zap size={20} className="text-emerald-400" />,
-    title: "We Onboard You",
-    body: "Send us your spreadsheet, we handle the rest.",
+    title: "Up and Running Same Day",
+    body: "Most agencies are fully live by the end of the onboarding call.",
   },
   {
     icon: <MessageSquare size={20} className="text-emerald-400" />,
     title: "Direct Line to the Builder",
-    body: "Your feedback shapes what gets built next.",
-  },
-  {
-    icon: <Clock size={20} className="text-emerald-400" />,
-    title: "Limited Spots",
-    body: "Small group only. First come, first served.",
+    body: "You get my personal contact. If something's off, I fix it fast.",
   },
 ];
 
 export default function CallToAction() {
-
-  const trackClick = async (eventName: string, metadata = {}) => {
-    try {
-      await supabase.from('analytics_events').insert([{
-        event_name: eventName,
-        page_path: window.location.pathname,
-        metadata,
-      }]);
-    } catch (err) {
-      console.error("Tracking failed:", err);
-    }
-  };
-
   return (
     <section className="py-24 md:py-40 bg-[#fafafa]">
       <div className="mx-auto max-w-5xl px-6">
@@ -51,7 +38,7 @@ export default function CallToAction() {
           <div className="bg-emerald-500 px-8 py-3 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-slate-900 animate-pulse" />
             <p className="text-slate-900 text-xs font-black uppercase tracking-widest">
-              Early Access — Beta Now Open
+              30 Minutes. We Handle Everything.
             </p>
           </div>
 
@@ -60,12 +47,12 @@ export default function CallToAction() {
 
             {/* Headline */}
             <div className="space-y-4 max-w-2xl">
-              <h2 className="text-5xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-[0.9]">
-                Still Running on<br />
-                <span className="text-emerald-500">Spreadsheets?</span>
+              <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight leading-[0.9]">
+                Still running on<br />
+                <span className="text-emerald-500">spreadsheets?</span>
               </h2>
               <p className="text-slate-400 text-lg font-medium leading-relaxed">
-                We're onboarding a small group of tutoring centers for free. No payment, no commitment — just a better way to run your schedule.
+                Book a free 30-minute call. We'll take a look at your current setup and get you running on something better — without losing anything you've already built.
               </p>
             </div>
 
@@ -80,7 +67,7 @@ export default function CallToAction() {
                     {perk.icon}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight mb-1">
+                    <p className="text-white font-bold text-sm leading-tight mb-1">
                       {perk.title}
                     </p>
                     <p className="text-slate-400 text-xs font-medium leading-relaxed">
@@ -91,22 +78,16 @@ export default function CallToAction() {
               ))}
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* CTA */}
+            <div className="flex flex-col sm:flex-row items-center gap-6">
               <Link
                 href="/free-trial"
-                onClick={() => trackClick("cta_waitlist_click", { type: "primary" })}
-                className="inline-flex items-center justify-center gap-2 h-14 px-8 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm uppercase italic tracking-widest rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-emerald-500/20"
+                onClick={() => trackEvent("bottom_cta_click")}
+                className="inline-flex items-center justify-center gap-2 h-16 px-10 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm uppercase tracking-widest rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-emerald-500/20 group"
               >
-                Join the Waitlist <ArrowRight size={18} />
+                Book Your Free Migration Call <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                href="/demo-video"
-                onClick={() => trackClick("cta_demo_click", { type: "secondary" })}
-                className="inline-flex items-center justify-center gap-2 h-14 px-8 bg-white/5 hover:bg-white/10 text-white font-black text-sm uppercase italic tracking-widest rounded-2xl border border-white/10 transition-all"
-              >
-                Watch the Demo
-              </Link>
+              <p className="text-slate-500 text-xs font-medium">No commitment. No credit card. Just a conversation.</p>
             </div>
 
           </div>
