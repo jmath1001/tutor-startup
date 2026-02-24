@@ -26,7 +26,7 @@ export const HeroHeader = () => {
               asChild
               className="h-11 px-6 bg-slate-900 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-emerald-500 hover:text-slate-900 transition-all shadow-md active:scale-95"
             >
-              <Link href="/free-trial" onClick={() => trackEvent("nav_cta_click")}>Book a Free Call</Link>
+              <Link href="/free-trial" onClick={() => trackEvent("nav_cta_click")}>Learn More</Link>
             </Button>
 
           </div>
