@@ -2,388 +2,218 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Zap, ArrowLeft, Mail, Star, Sparkles, Users, Clock, X, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { trackEvent } from "@/lib/trackEvent";
 
-const TESTIMONIALS = [
+const outcomes = [
   {
-    name: "Sarah Chen",
-    role: "Director, Eastside Tutoring",
-    content: "We went from 15 Excel tabs and constant confusion to one clean dashboard. Game changer.",
-    rating: 5
+    title: "Your tutors always know their schedule",
+    body: "No more 'wait what time is my session?' texts. Every tutor sees their week in real time.",
   },
   {
-    name: "Marcus Williams",
-    role: "Owner, Elite Learning Center",
-    content: "The migration took 2 hours and saved us 10+ hours weekly. Worth every penny.",
-    rating: 5
+    title: "Students stop missing sessions",
+    body: "They can see exactly when and where their next session is. Fewer no-shows, more billable hours.",
   },
   {
-    name: "Jessica Rodriguez",
-    role: "Operations Manager, StudyHub",
-    content: "No more 'who's available?' texts at 10pm. Everything syncs automatically.",
-    rating: 5
+    title: "Rescheduling takes seconds, not an hour",
+    body: "Tutor cancels last minute? The system instantly shows who's available to cover. Two clicks and it's done.",
   },
   {
-    name: "David Park",
-    role: "Founder, Peak Academics",
-    content: "Scheduling conflicts dropped 90%. Our tutors actually know where they need to be.",
-    rating: 5
+    title: "You stop being the human spreadsheet",
+    body: "Stop being the person who holds all the scheduling knowledge in your head. It's all in one place everyone can see.",
   },
-  {
-    name: "Amanda Foster",
-    role: "Director, SmartStart Tutoring",
-    content: "Best decision we made this year. The ROI was immediate.",
-    rating: 5
-  },
-  {
-    name: "James Mitchell",
-    role: "Owner, Catalyst Learning",
-    content: "Simple, powerful, and actually works. No fluff, just results.",
-    rating: 5
-  }
 ];
 
-function TestimonialCarousel() {
-  return (
-    <div className="relative overflow-hidden py-16 bg-gradient-to-b from-slate-50 to-white">
-      <div className="flex animate-infinite-scroll">
-        {[...TESTIMONIALS, ...TESTIMONIALS].map((testimonial, idx) => (
-          <div
-            key={idx}
-            className="flex-shrink-0 w-[380px] mx-3 p-6 bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-xl transition-shadow"
-          >
-            <div className="flex gap-0.5 mb-4">
-              {[...Array(testimonial.rating)].map((_, i) => (
-                <Star key={i} size={16} className="text-amber-400 fill-amber-400" />
-              ))}
-            </div>
-            <p className="text-sm text-slate-700 mb-6 leading-relaxed">
-              "{testimonial.content}"
-            </p>
-            <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
-                {testimonial.name.split(' ').map(n => n[0]).join('')}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-slate-900">{testimonial.name}</p>
-                <p className="text-xs text-slate-500">{testimonial.role}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      <style jsx>{`
-        @keyframes infinite-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-infinite-scroll {
-          animation: infinite-scroll 40s linear infinite;
-        }
-      `}</style>
-    </div>
-  );
-}
+const faqs = [
+  {
+    q: "Will this work with what I'm already using?",
+    a: "Yes. Whether you're on Excel, Google Sheets, a CRM, or a mix of everything — we work with it. We've seen every setup and we'll get it moved over.",
+  },
+  {
+    q: "How long does it take to get set up?",
+    a: "Most agencies are fully live by the end of the onboarding call. We do the heavy lifting — you just show up and confirm everything looks right.",
+  },
+  {
+    q: "Will my tutors actually use this?",
+    a: "Tutors get a simple portal that shows their schedule and nothing else. No learning curve, no training needed. If they can read a calendar, they can use this.",
+  },
+  {
+    q: "What happens to my existing student data?",
+    a: "It all comes with you. Every student, every tutor, every recurring session. We don't go live until you've confirmed nothing is missing.",
+  },
+  {
+    q: "What does the call actually involve?",
+    a: "You show us your current setup, we import everything, configure your schedule, and get your tutors and students added. It's a working session, not a sales pitch.",
+  },
+];
 
-function WaitlistModal({ open, onClose, onSubmit }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    centerName: "",
-    numTutors: ""
-  });
+export default function LearnMorePage() {
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  if (!open) return null;
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit(formData);
-    setLoading(false);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", centerName: "", numTutors: "" });
-      onClose();
-    }, 5000);
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
-        onClick={onClose} 
-      />
-      <motion.div 
-        initial={{ scale: 0.95, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="relative bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl"
-      >
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors"
-        >
-          <X size={20} />
-        </button>
-        {!submitted ? (
-          <>
-            <div className="mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
-                <Sparkles className="text-white" size={24} />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Join Early Access</h2>
-              <p className="text-sm text-slate-600">
-                Limited to 10 centers. Free while in beta. We'll personally handle your migration.
-              </p>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Your Name</label>
-                <input
-                  type="text" 
-                  required 
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  placeholder="Jane Smith"
-                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                <input
-                  type="email" 
-                  required 
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="jane@tutoringcenter.com"
-                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Tutoring Center Name</label>
-                <input
-                  type="text" 
-                  required 
-                  value={formData.centerName}
-                  onChange={(e) => setFormData({...formData, centerName: e.target.value})}
-                  placeholder="ABC Learning Center"
-                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Number of Tutors</label>
-                <select
-                  required 
-                  value={formData.numTutors}
-                  onChange={(e) => setFormData({...formData, numTutors: e.target.value})}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-slate-900"
-                >
-                  <option value="">Select...</option>
-                  <option value="1-5">1-5 tutors</option>
-                  <option value="6-10">6-10 tutors</option>
-                  <option value="11-20">11-20 tutors</option>
-                  <option value="20+">20+ tutors</option>
-                </select>
-              </div>
-              <Button 
-                type="submit" 
-                disabled={loading} 
-                className="w-full h-12 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-lg hover:from-emerald-600 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl"
-              >
-                {loading ? <Loader2 className="animate-spin mr-2" size={20} /> : "Claim Your Spot"}
-              </Button>
-              <p className="text-xs text-center text-slate-500">
-                Free during beta • Full migration support included
-              </p>
-            </form>
-          </>
-        ) : (
-          <div className="flex flex-col items-center py-10 text-center">
-            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle size={32} className="text-emerald-500" />
-            </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">You're on the list!</h3>
-            <p className="text-slate-600">
-              We'll reach out within 24 hours to schedule your migration and get you set up.
-            </p>
-          </div>
-        )}
-      </motion.div>
-    </div>
-  );
-}
-
-export default function WaitlistPage() {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleWaitlistSubmit = async (formData) => {
     try {
-      await supabase.from('waitlist_signups').insert([{
-        name: formData.name,
-        email: formData.email,
-        center_name: formData.centerName,
-        num_tutors: formData.numTutors,
-        status: 'pending'
+      await supabase.from("waitlist_signups").insert([{
+        email,
+        status: "pending",
       }]);
-      console.log("Waitlist signup successful");
+      await trackEvent("learn_more_email_submit", { email });
+      setSubmitted(true);
     } catch (err) {
       console.error("Error:", err);
     }
+    setLoading(false);
   };
 
-  const features = [
-    "Auto-sync tutor availability",
-    "Smart student-tutor matching",
-    "One-click rescheduling",
-    "Attendance tracking",
-    "Hour package management",
-    "Real-time notifications"
-  ];
-
   return (
-    <main className="bg-gradient-to-b from-slate-50 to-white min-h-screen">
-      {/* Navigation */}
-      <nav className="max-w-7xl mx-auto px-6 py-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors group">
-          <div className="w-8 h-8 bg-white rounded-lg border border-slate-200 flex items-center justify-center group-hover:border-slate-300 transition-colors">
-            <ArrowLeft size={16} />
-          </div>
-          <span className="text-sm font-medium">Back to Home</span>
+    <main className="bg-white min-h-screen">
+
+      {/* Nav */}
+      <nav className="max-w-5xl mx-auto px-6 py-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors group text-sm font-medium"
+        >
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          Back
         </Link>
       </nav>
 
-      {/* Hero Section */}
-      <section className="max-w-4xl mx-auto px-6 pt-8 pb-12 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <Users size={16} />
-            <span>Limited to 10 Centers</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-4">
-            Join the <br />
-            <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-              Early Access Waitlist
-            </span>
+      {/* Hero */}
+      <section className="max-w-3xl mx-auto px-6 pt-8 pb-20 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+            Here's exactly<br />
+            <span className="text-emerald-500">what changes.</span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
-            We're accepting 10 tutoring centers for free beta access. Get white-glove migration and be part of building the future of tutoring center management.
+          <p className="text-lg text-slate-500 leading-relaxed max-w-xl mx-auto">
+            You clicked learn more because something on that page sounded familiar. Here's what your agency looks like once the scheduling chaos is gone.
           </p>
-          <Button
-            onClick={() => setModalOpen(true)}
-            className="h-14 px-8 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-lg hover:from-emerald-600 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl text-base"
-          >
-            Claim Your Spot
-          </Button>
         </motion.div>
       </section>
 
-      {/* What's Included */}
-      <section className="max-w-4xl mx-auto px-6 pb-16">
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-lg">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">What You Get (Free During Beta)</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {features.map((feature, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <CheckCircle size={20} className="text-emerald-500 flex-shrink-0" />
-                <span className="text-slate-700">{feature}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 pt-6 border-t border-slate-200">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-50 to-cyan-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Mail className="text-emerald-500" size={24} />
+      {/* Outcomes */}
+      <section className="max-w-3xl mx-auto px-6 pb-24">
+        <div className="space-y-4">
+          {outcomes.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="flex items-start gap-5 bg-slate-50 border border-slate-200 rounded-2xl p-6"
+            >
+              <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0 mt-0.5">
+                <CheckCircle size={14} className="text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-slate-900 mb-1">White-Glove Migration Included</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  We handle 100% of your data migration from Excel, Google Sheets, or whatever you're using now. 
-                  Plus full team training and ongoing support.
-                </p>
+                <p className="font-bold text-slate-900 mb-1">{item.title}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">{item.body}</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="max-w-4xl mx-auto px-6 pb-16">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">
-            Common Questions
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          <details className="group bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-            <summary className="flex items-center justify-between cursor-pointer list-none">
-              <span className="font-semibold text-slate-900">Why is it free?</span>
-              <span className="text-slate-400 group-open:rotate-180 transition-transform">
-                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </summary>
-            <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-              We're in early access and want feedback from real tutoring centers. You help us build the best product, 
-              we help you fix your scheduling chaos. Win-win.
-            </p>
-          </details>
-
-          <details className="group bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-            <summary className="flex items-center justify-between cursor-pointer list-none">
-              <span className="font-semibold text-slate-900">How long is it free?</span>
-              <span className="text-slate-400 group-open:rotate-180 transition-transform">
-                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </summary>
-            <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-              At least 3-6 months. When we do eventually charge, you'll get grandfathered pricing 
-              (way cheaper than regular rates). No surprises.
-            </p>
-          </details>
-
-          <details className="group bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-            <summary className="flex items-center justify-between cursor-pointer list-none">
-              <span className="font-semibold text-slate-900">What if I want to cancel?</span>
-              <span className="text-slate-400 group-open:rotate-180 transition-transform">
-                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </summary>
-            <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-              You can stop using it anytime, no questions asked. We export all your data back to you.
-            </p>
-          </details>
+      <section className="max-w-3xl mx-auto px-6 pb-24">
+        <h2 className="text-2xl font-black text-slate-900 mb-8">Common questions</h2>
+        <div className="space-y-3">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                className="w-full flex items-center justify-between px-6 py-5 text-left"
+              >
+                <span className="font-semibold text-slate-900 text-sm">{faq.q}</span>
+                <span className={`text-slate-400 transition-transform duration-200 shrink-0 ml-4 ${openFaq === i ? "rotate-180" : ""}`}>
+                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </button>
+              {openFaq === i && (
+                <div className="px-6 pb-5">
+                  <p className="text-sm text-slate-500 leading-relaxed">{faq.a}</p>
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Email CTA */}
+      <section className="max-w-3xl mx-auto px-6 pb-32">
+        <div className="bg-slate-900 rounded-3xl p-10 md:p-14 text-center">
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mx-auto mb-6" />
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
+            Ready to book your<br />
+            <span className="text-emerald-400">free migration call?</span>
+          </h2>
+          <p className="text-slate-400 mb-10 leading-relaxed">
+            Drop your email and we'll reach out to schedule. 30 minutes, we handle everything, no commitment.
+          </p>
 
-      <AnimatePresence>
-        {modalOpen && (
-          <WaitlistModal 
-            open={modalOpen} 
-            onClose={() => setModalOpen(false)} 
-            onSubmit={handleWaitlistSubmit} 
-          />
-        )}
-      </AnimatePresence>
+          {!submitted ? (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            >
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@tutoringcenter.com"
+                className="flex-1 h-14 px-5 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="h-14 px-8 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm uppercase tracking-widest rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 group shrink-0"
+              >
+                {loading
+                  ? <Loader2 size={18} className="animate-spin" />
+                  : <><span>Book My Call</span><ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
+                }
+              </button>
+            </form>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center gap-3"
+            >
+              <div className="w-14 h-14 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                <CheckCircle size={28} className="text-emerald-400" />
+              </div>
+              <p className="text-white font-bold text-lg">You're in.</p>
+              <p className="text-slate-400 text-sm">We'll reach out within 24 hours to schedule your call.</p>
+            </motion.div>
+          )}
+
+          <p className="text-xs text-slate-600 mt-6">No spam. No commitment. Just a conversation.</p>
+        </div>
+      </section>
+
     </main>
   );
 }
