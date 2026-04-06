@@ -4,23 +4,16 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const painPoints = [
-  "Finding out about a new student the day of",
-  "No idea what your week looked like until someone texted you",
-  "Front office juggling 5 spreadsheets to figure out who's free",
+  "Inconsistent workflows across locations",
+  "Multiple sheets and chat threads for one schedule",
+  "No reliable cross-center attendance visibility",
 ];
 
 export default function CredibilitySection() {
   return (
-    <section className="relative bg-slate-950 py-24 md:py-32 overflow-hidden">
-      {/* Grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
-      />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none" />
+    <section className="relative py-24 md:py-32 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(56,189,248,0.16),transparent_42%),radial-gradient(circle_at_82%_18%,rgba(16,185,129,0.12),transparent_40%),radial-gradient(circle_at_50%_95%,rgba(99,102,241,0.1),transparent_42%)]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none ai-grid" />
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
 
@@ -30,21 +23,21 @@ export default function CredibilitySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-10 border border-emerald-500/20">
-            Built From Experience
+          <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-1.5 rounded-none text-xs font-semibold uppercase tracking-widest mb-10 border border-sky-200">
+            Built For Multi-Location Teams
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight mb-8">
-            This wasn't built by someone<br />
-            <span className="text-emerald-400">guessing at the problem.</span>
+          <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-8">
+            Built for enterprise tutoring operators,<br />
+            not one-center workflows.
           </h2>
 
-          <p className="text-lg text-slate-400 leading-relaxed mb-6">
-            I was a tutor. I showed up to sessions not knowing a new student had been added to my schedule. I watched the front office spend more time managing calendars than managing their business — bouncing between spreadsheets, group chats, and frantic texts just to answer "who's free Thursday at 4?"
+          <p className="text-lg text-slate-600 leading-relaxed mb-6">
+            National tutoring organizations need consistent execution across scheduling, attendance, communication, and reporting. Thetix gives every center the same operating model while preserving local flexibility.
           </p>
 
-          <p className="text-lg text-slate-300 font-medium leading-relaxed mb-16">
-            I built this because I lived on both sides of the chaos. I know exactly what's broken and exactly what needs to fix it.
+          <p className="text-lg text-slate-700 font-medium leading-relaxed mb-16">
+            Give directors, regional managers, and HQ one live view of operations so decisions are faster and standards are easier to enforce.
           </p>
         </motion.div>
 
@@ -59,16 +52,16 @@ export default function CredibilitySection() {
           {painPoints.map((point, i) => (
             <div
               key={i}
-              className="flex items-center gap-4 bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 text-left"
+              className="flex items-center gap-4 ai-surface border border-slate-300 rounded-none px-6 py-5 text-left"
             >
-              <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-              <p className="text-slate-300 font-medium">{point}</p>
+              <div className="w-2 h-2 rounded-full bg-sky-500 shrink-0" />
+              <p className="text-slate-700 font-medium">{point}</p>
             </div>
           ))}
 
-          <div className="mt-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-5 text-left">
-            <p className="text-emerald-300 font-semibold">
-              Sound familiar? That's the whole point. This tool was built to kill every one of these.
+          <div className="mt-4 bg-sky-50 border border-sky-200 rounded-none px-6 py-5 text-left">
+            <p className="text-sky-700 font-semibold">
+              If this sounds familiar, Thetix is designed to solve it at enterprise scale.
             </p>
           </div>
         </motion.div>

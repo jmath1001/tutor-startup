@@ -118,5 +118,70 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.22), transparent 65%),
+      radial-gradient(900px 500px at 90% 0%, rgba(16, 185, 129, 0.2), transparent 60%),
+      radial-gradient(900px 500px at 50% 120%, rgba(14, 165, 233, 0.15), transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+@keyframes aiFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aiPulse {
+  0% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.45;
+  }
+}
+
+@layer utilities {
+  .ai-surface {
+    @apply relative overflow-hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.92));
+    backdrop-filter: blur(8px);
+  }
+
+  .ai-surface::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgba(56, 189, 248, 0.35), rgba(16, 185, 129, 0.25), rgba(99, 102, 241, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .ai-grid {
+    background-image:
+      linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .ai-glow {
+    animation: aiPulse 3s ease-in-out infinite;
+  }
+
+  .ai-float {
+    animation: aiFloat 5s ease-in-out infinite;
   }
 }

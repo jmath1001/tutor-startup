@@ -8,51 +8,42 @@ const steps = [
   {
     number: "01",
     icon: <FileSpreadsheet size={24} />,
-    title: "Bring Whatever You Have",
+    title: "Keep your current data",
     description:
-      "Excel spreadsheet? CRM? A Google Sheet you've been patching for years? A folder of sticky notes? It doesn't matter. We've seen it all and we'll work with it.",
-    callout: "No \"compatible format\" required.",
+      "Spreadsheet, CRM export, or legacy system data - we map it into Thetix so every location starts from clean, consistent records.",
+    callout: "No data reset required.",
   },
   {
     number: "02",
     icon: <PhoneCall size={24} />,
-    title: "We Set It Up Together",
+    title: "Rollout plan with your operations team",
     description:
-      "You get on a 30-minute call with us. We do the heavy lifting — importing your students, setting up your tutors, configuring your schedule. You just watch and ask questions.",
-    callout: "You won't touch a settings page alone.",
+      "Define center-level workflows, regional controls, and launch milestones so every team adopts the same process.",
+    callout: "Structured rollout, not ad hoc setup.",
   },
   {
     number: "03",
     icon: <ShieldCheck size={24} />,
-    title: "Nothing Gets Lost",
+    title: "Validate workflows before go-live",
     description:
-      "Every student, every tutor, every recurring session — it all comes over. We double-check it with you before you go live. Your history stays yours.",
-    callout: "We don't go live until you're confident.",
+      "Review schedules, confirm tutor and student mappings, and test operational rules so standards are correct before launch.",
+    callout: "Go live with operational confidence.",
   },
   {
     number: "04",
     icon: <Rocket size={24} />,
-    title: "You're Live. We Stay Close.",
+    title: "Post-launch governance and support",
     description:
-      "Your schedule is live, your tutors have their portals, and your students can see their sessions. We check in during your first week to make sure everything runs smoothly.",
-    callout: "Most centers are fully running same day.",
+      "Monitor adoption, resolve edge cases, and keep processes consistent as additional centers come online.",
+    callout: "Enterprise support included.",
   },
 ];
 
 export default function MigrationProcess() {
   return (
-    <section className="relative bg-slate-950 py-24 md:py-32 overflow-hidden">
-      {/* Subtle grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
-      />
-
-      {/* Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+    <section className="relative py-24 md:py-32 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(56,189,248,0.16),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(16,185,129,0.14),transparent_36%),radial-gradient(circle_at_50%_100%,rgba(99,102,241,0.09),transparent_44%)]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none ai-grid" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
 
@@ -64,15 +55,14 @@ export default function MigrationProcess() {
           transition={{ duration: 0.6 }}
           className="max-w-2xl mb-20"
         >
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-emerald-500/20">
-            Switching Is Easier Than You Think
+          <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-1.5 rounded-none text-xs font-semibold uppercase tracking-widest mb-6 border border-sky-200">
+            Enterprise onboarding framework
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight mb-5">
-            Don't throw away<br />
-            <span className="text-emerald-400">what you've already built.</span>
+          <h2 className="text-3xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-5">
+            Roll out in weeks, not quarters.
           </h2>
-          <p className="text-lg text-slate-400 leading-relaxed">
-            We know you've spent months setting up your student database, your onboarding, your processes. You're not starting over — you're bringing it all with you.
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Bring your current data, align teams on one operating model, and launch without disrupting classes. This is the fastest path from fragmented tools to standardized multi-location operations.
           </p>
         </motion.div>
 
@@ -85,30 +75,30 @@ export default function MigrationProcess() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-emerald-500/40 transition-all duration-300"
+              className="group ai-surface relative border border-slate-300 bg-slate-100/85 rounded-none p-8 transition-all duration-300"
             >
               {/* Step number - background */}
-              <div className="absolute top-6 right-8 text-7xl font-black text-slate-800 leading-none select-none group-hover:text-slate-700 transition-colors">
+              <div className="absolute top-6 right-8 text-7xl font-bold text-slate-300 leading-none select-none transition-colors">
                 {step.number}
               </div>
 
               {/* Icon */}
-              <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400 mb-6">
+              <div className="w-12 h-12 bg-sky-100 border border-sky-200 rounded-none flex items-center justify-center text-sky-700 mb-6">
                 {step.icon}
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-bold text-white mb-3 relative z-10">
+              <h3 className="text-xl font-semibold text-slate-900 mb-3 relative z-10">
                 {step.title}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5 relative z-10">
+              <p className="text-slate-600 text-sm leading-relaxed mb-5 relative z-10">
                 {step.description}
               </p>
 
               {/* Callout */}
-              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 relative z-10">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                <span className="text-xs font-semibold text-emerald-400">
+              <div className="inline-flex items-center gap-2 bg-slate-100 border border-slate-300 rounded-none px-3 py-2 relative z-10">
+                <div className="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0" />
+                <span className="text-xs font-semibold text-slate-700">
                   {step.callout}
                 </span>
               </div>
@@ -122,14 +112,14 @@ export default function MigrationProcess() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-900 border border-slate-800 rounded-2xl px-8 py-6"
+          className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 ai-surface border border-slate-300 rounded-none px-8 py-6"
         >
-          <p className="text-slate-300 font-medium text-center sm:text-left">
-            Still nervous about switching? <span className="text-white font-bold">That's exactly why we get on a call first.</span>
+          <p className="text-slate-700 font-medium text-center sm:text-left">
+            This is a guided enterprise rollout, not a self-serve handoff. <span className="text-slate-900 font-semibold">We stay involved until operations are stable across sites.</span>
           </p>
-          <div className="shrink-0 flex items-center gap-2 text-emerald-400 text-sm font-bold uppercase tracking-widest">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Free during beta
+          <div className="shrink-0 flex items-center gap-2 text-sky-700 text-sm font-semibold uppercase tracking-widest">
+            <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
+            Enterprise support included
           </div>
         </motion.div>
 
