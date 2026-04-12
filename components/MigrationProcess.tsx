@@ -10,32 +10,32 @@ const steps = [
     icon: <FileSpreadsheet size={24} />,
     title: "Keep your current data",
     description:
-      "Spreadsheet, CRM export, or legacy system data - we map it into Thetix so every location starts from clean, consistent records.",
+      "Spreadsheet, CRM export, or legacy system data - we map it into Thetix so your center starts with clean, consistent records.",
     callout: "No data reset required.",
   },
   {
     number: "02",
     icon: <PhoneCall size={24} />,
-    title: "Rollout plan with your operations team",
+    title: "Launch plan that fits your stage",
     description:
-      "Define center-level workflows, regional controls, and launch milestones so every team adopts the same process.",
-    callout: "Structured rollout, not ad hoc setup.",
+      "Start quickly as one center, or align regional controls and milestones for franchise and enterprise adoption.",
+    callout: "Start simple, scale with structure.",
   },
   {
     number: "03",
     icon: <ShieldCheck size={24} />,
     title: "Validate workflows before go-live",
     description:
-      "Review schedules, confirm tutor and student mappings, and test operational rules so standards are correct before launch.",
+      "Review schedules, confirm tutor and student mappings, and test reminders, attendance, and history workflows before launch.",
     callout: "Go live with operational confidence.",
   },
   {
     number: "04",
     icon: <Rocket size={24} />,
-    title: "Post-launch governance and support",
+    title: "Post-launch support as you grow",
     description:
-      "Monitor adoption, resolve edge cases, and keep processes consistent as additional centers come online.",
-    callout: "Enterprise support included.",
+      "Monitor adoption, resolve edge cases, and keep processes consistent as you add tutors, students, and additional centers.",
+    callout: "Support for every growth stage.",
   },
 ];
 
@@ -56,13 +56,13 @@ export default function MigrationProcess() {
           className="max-w-2xl mb-20"
         >
           <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-1.5 rounded-none text-xs font-semibold uppercase tracking-widest mb-6 border border-sky-200">
-            Enterprise onboarding framework
+            Flexible onboarding framework
           </div>
           <h2 className="text-3xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-5">
-            Roll out in weeks, not quarters.
+            Start fast. Scale without switching systems.
           </h2>
           <p className="text-lg text-slate-600 leading-relaxed">
-            Bring your current data, align teams on one operating model, and launch without disrupting classes. This is the fastest path from fragmented tools to standardized multi-location operations.
+            Bring your current data, launch without disrupting classes, and keep one operating model as you grow from one center to franchise or enterprise operations.
           </p>
         </motion.div>
 
@@ -115,11 +115,11 @@ export default function MigrationProcess() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 ai-surface border border-slate-300 rounded-none px-8 py-6"
         >
           <p className="text-slate-700 font-medium text-center sm:text-left">
-            This is a guided enterprise rollout, not a self-serve handoff. <span className="text-slate-900 font-semibold">We stay involved until operations are stable across sites.</span>
+            Choose the onboarding style you need. <span className="text-slate-900 font-semibold">Start self-serve as a single center or run a guided rollout for franchise and enterprise teams.</span>
           </p>
           <div className="shrink-0 flex items-center gap-2 text-sky-700 text-sm font-semibold uppercase tracking-widest">
             <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-            Enterprise support included
+            Guided and self-serve options
           </div>
         </motion.div>
 

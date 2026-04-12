@@ -25,37 +25,37 @@ export default function Features() {
     {
       id: "record",
       icon: <CalendarCheck size={28} className="text-emerald-500" />,
-      label: "Enterprise Core",
-      title: "One operating system across every location",
-      description: "Centralize schedules, attendance, student history, and family communication so all centers run on the same operational standard.",
-      points: ["Network-wide source of truth", "Consistent records across sites", "No duplicate logging"],
+      label: "AI Autoscheduler",
+      title: "Watch AI build the optimal schedule from constraints",
+      description: "Input students, subjects, and availability, then let AI place sessions by tutor fit, time windows, and capacity without manual reshuffling.",
+      points: ["Constraint-aware placement", "Fewer scheduling errors", "Faster weekly build"],
       video: "/videos/ai-demo.mp4",
     },
     {
       id: "workflow",
       icon: <BellRing size={28} className="text-rose-500" />,
-      label: "Standardization",
-      title: "Enforce repeatable workflows for every center",
-      description: "Match tutors by subject and availability, mark attendance once, and apply the same operating rules across all locations.",
-      points: ["Tutor + subject matching", "Attendance tied to schedule", "Standard SOP execution"],
+      label: "Automation",
+      title: "Automate reminders, attendance, and follow-up",
+      description: "Match tutors by subject and availability, trigger reminders automatically, and keep attendance tied to each scheduled session so fewer tasks are done manually.",
+      points: ["Tutor + subject matching", "Automated reminders", "Fewer manual mistakes"],
       video: "/videos/tracking-demo.mp4",
     },
     {
       id: "automation",
       icon: <TrendingDown size={28} className="text-blue-500" />,
-      label: "Efficiency",
-      title: "AI that scales coordinator output",
-      description: "Automate reminders, answer schedule questions instantly, and improve allocations so each operations team can support more students without adding overhead.",
-      points: ["Fewer manual calls", "Faster schedule decisions", "Higher seat utilization"],
+      label: "Centralized Ops",
+      title: "Connect fragmented workflows in one operating layer",
+      description: "Replace disconnected spreadsheets, chats, and trackers with one platform for schedules, attendance, reminders, and student history.",
+      points: ["Single source of truth", "No repetitive record keeping", "Reliable operational history"],
       video: "/videos/attendance-demo.mp4",
     },
     {
       id: "search",
       icon: <RotateCcw size={28} className="text-violet-500" />,
-      label: "Executive Visibility",
-      title: "Give regional and HQ teams instant answers",
-      description: "Query student history, no-show patterns, available slots, and upcoming sessions across locations without waiting on reports.",
-      points: ["Cross-center attendance trends", "Available subject slots", "Upcoming sessions at a glance"],
+      label: "Growth Ready",
+      title: "Scale from one center to franchise and enterprise",
+      description: "Keep one consistent system as you expand to multiple centers, with visibility for center leads, regional operators, and HQ.",
+      points: ["Cross-center attendance trends", "Available subject slots", "Franchise-ready consistency"],
       video: "/videos/queries-demo.mp4",
     },
   ], []);
@@ -90,10 +90,10 @@ export default function Features() {
           className="max-w-3xl mb-10 sm:mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-slate-900 tracking-tight leading-tight mb-4">
-            Built for enterprise tutoring operations, not just reporting.
+            Solve fragmented, manual, and error-prone center operations.
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl">
-            Switch between workflows to see how Thetix standardizes scheduling, attendance, and AI-assisted operations across regional and national teams.
+            Switch between workflows to see how centers use Thetix to centralize fragmented processes, automate repetitive work, run AI autoscheduling with constraints, and scale with one operational system.
           </p>
         </motion.div>
 

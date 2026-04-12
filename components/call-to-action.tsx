@@ -8,23 +8,23 @@ import { trackEvent } from "@/lib/trackEvent";
 const perks = [
   {
     icon: <CalendarCheck size={20} className="text-sky-600" />,
-    title: "Enterprise onboarding",
-    body: "A structured rollout with clear milestones for HQ, regional teams, and center staff.",
+    title: "Fast start for one center",
+    body: "Go live quickly with scheduling, reminders, attendance, and history in one workflow.",
   },
   {
     icon: <Shield size={20} className="text-sky-600" />,
     title: "Keep your data",
-    body: "We migrate students, tutors, and session records without losing operational history.",
+    body: "We migrate students, tutors, and session records without losing progress or history.",
   },
   {
     icon: <Zap size={20} className="text-sky-600" />,
-    title: "Scale rollout by region",
-    body: "Launch in phases so each region adopts consistent workflows with minimal disruption.",
+    title: "Scale across centers",
+    body: "Expand to multiple locations and franchise operations using the same operating system.",
   },
   {
     icon: <MessageSquare size={20} className="text-sky-600" />,
-    title: "Dedicated support",
-    body: "Get responsive implementation and operations support as your network grows.",
+    title: "AI + human support",
+    body: "Use AI for scheduling and follow-up while getting implementation support as you grow.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function CallToAction() {
           <div className="bg-sky-100 px-8 py-3 flex items-center gap-2 border-b border-sky-200">
             <span className="w-2 h-2 rounded-full bg-sky-600 animate-pulse" />
             <p className="text-sky-700 text-xs font-semibold uppercase tracking-widest">
-              Enterprise readiness session
+              Built for every growth stage
             </p>
           </div>
 
@@ -50,11 +50,11 @@ export default function CallToAction() {
             {/* Headline */}
             <div className="space-y-4 max-w-2xl">
               <h2 className="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[0.95]">
-                From admin chaos to
-                predictable growth.
+                Meet your operations copilot.
+                Run everything in one platform.
               </h2>
               <p className="text-slate-600 text-lg font-medium leading-relaxed">
-                Book a 30-minute demo and see how Thetix standardizes multi-location operations, cuts admin hours, and protects billable hours.
+                Book a 30-minute demo and see how Thetix connects fragmented workflows, removes repetitive manual work, and uses constraint-aware AI autoscheduling in one centralized platform.
               </p>
             </div>
 

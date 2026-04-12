@@ -480,7 +480,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.4, delay: 0.1 }}
                 className="inline-flex items-center bg-black text-white px-4 py-2 text-xs font-medium uppercase tracking-wider"
               >
-                Built for multi-location tutoring operations
+                The tutoring operations copilot
               </motion.div>
 
               <motion.h1
@@ -489,7 +489,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tight leading-tight"
               >
-                The operations platform for growing and national tutoring brands.
+                A centralized platform that connects fragmented tutoring workflows.
               </motion.h1>
 
               <motion.p
@@ -498,7 +498,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed"
               >
-                Standardize scheduling, attendance, communication, and session history across every center. Thetix AI helps regional and HQ teams cut admin hours, increase billable hours, and enforce one operating standard at scale.
+                Centers often run on fragmented, unreliable systems with repetitive manual work and frequent logging mistakes. Thetix unifies scheduling, attendance, reminders, communication, and history into one operating layer, with AI autoscheduling that optimizes tutor match, availability, capacity, and time constraints.
               </motion.p>
 
               <motion.p
@@ -507,7 +507,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="text-sm text-gray-500 font-medium"
               >
-                Designed for center directors, regional managers, and HQ operators who need real-time control.
+                Built for one center, many centers, franchise networks, and enterprise teams that need one operating standard.
               </motion.p>
 
               <motion.div
@@ -534,10 +534,10 @@ export default function HeroSection() {
                 className="flex flex-wrap gap-2 sm:gap-3"
               >
                 {[
-                  "Multi-center visibility",
-                  "Standardized workflows",
-                  "AI-assisted operations",
-                  "Optimized capacity",
+                  "Connect fragmented operational workflows",
+                  "Replace repetitive manual record keeping",
+                  "Constraint-aware AI autoscheduling",
+                  "Reliable tracking and student history",
                 ].map((text) => (
                   <div key={text} className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-50 border border-gray-200">
                     <CheckCircle2 size={12} className="text-black" />

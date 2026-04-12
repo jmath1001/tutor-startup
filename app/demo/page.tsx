@@ -23,20 +23,20 @@ const EXISTING: Record<string, { name: string; subject: string; color: string }[
 }
 
 const STUDENTS_TO_PLACE = [
-  { id: 's1',  name: 'Maya Patel',   subject: 'Algebra',     initials: 'MP', color: '#0ea5e9', bg: '#e0f2fe' },
-  { id: 's2',  name: 'Alex Chen',    subject: 'Algebra',     initials: 'AC', color: '#0ea5e9', bg: '#e0f2fe' },
-  { id: 's3',  name: 'Zara Ahmed',   subject: 'English',     initials: 'ZA', color: '#ec4899', bg: '#fce7f3' },
-  { id: 's4',  name: 'Tyler Brooks', subject: 'Chemistry',   initials: 'TB', color: '#f97316', bg: '#ffedd5' },
-  { id: 's5',  name: 'Anya Singh',   subject: 'Calculus',    initials: 'AS', color: '#8b5cf6', bg: '#ede9fe' },
-  { id: 's6',  name: 'Ryan Park',    subject: 'SAT Math',    initials: 'RP', color: '#0ea5e9', bg: '#e0f2fe' },
-  { id: 's7',  name: 'Isla Torres',  subject: 'English',     initials: 'IT', color: '#ec4899', bg: '#fce7f3' },
-  { id: 's8',  name: 'Dev Sharma',   subject: 'Geometry',    initials: 'DS', color: '#8b5cf6', bg: '#ede9fe' },
-  { id: 's9',  name: 'Nora Kim',     subject: 'Chemistry',   initials: 'NK', color: '#f97316', bg: '#ffedd5' },
-  { id: 's10', name: 'Ethan Cole',   subject: 'Calculus',    initials: 'EC', color: '#8b5cf6', bg: '#ede9fe' },
-  { id: 's11', name: 'Layla Hassan', subject: 'Writing',     initials: 'LH', color: '#ec4899', bg: '#fce7f3' },
-  { id: 's12', name: 'Sam Rivera',   subject: 'SAT Math',    initials: 'SR', color: '#0ea5e9', bg: '#e0f2fe' },
-  { id: 's13', name: 'Kai Nguyen',   subject: 'ACT Science', initials: 'KN', color: '#f97316', bg: '#ffedd5' },
-  { id: 's14', name: 'Pia Gonzalez', subject: 'Algebra',     initials: 'PG', color: '#0ea5e9', bg: '#e0f2fe' },
+  { id: 's1',  name: 'Maya Patel',   subject: 'Algebra',     availability: 'Mon/Wed 3:30-5:30', initials: 'MP', color: '#0ea5e9', bg: '#e0f2fe' },
+  { id: 's2',  name: 'Alex Chen',    subject: 'Algebra',     availability: 'Tue/Thu 3:30-4:30', initials: 'AC', color: '#0ea5e9', bg: '#e0f2fe' },
+  { id: 's3',  name: 'Zara Ahmed',   subject: 'English',     availability: 'Thu/Sat 3:30-4:30', initials: 'ZA', color: '#ec4899', bg: '#fce7f3' },
+  { id: 's4',  name: 'Tyler Brooks', subject: 'Chemistry',   availability: 'Mon/Thu 4:30-5:30', initials: 'TB', color: '#f97316', bg: '#ffedd5' },
+  { id: 's5',  name: 'Anya Singh',   subject: 'Calculus',    availability: 'Tue/Wed 4:30-5:30', initials: 'AS', color: '#8b5cf6', bg: '#ede9fe' },
+  { id: 's6',  name: 'Ryan Park',    subject: 'SAT Math',    availability: 'Wed 4:30-5:30', initials: 'RP', color: '#0ea5e9', bg: '#e0f2fe' },
+  { id: 's7',  name: 'Isla Torres',  subject: 'English',     availability: 'Sat 3:30-5:30', initials: 'IT', color: '#ec4899', bg: '#fce7f3' },
+  { id: 's8',  name: 'Dev Sharma',   subject: 'Geometry',    availability: 'Wed 3:30-5:30', initials: 'DS', color: '#8b5cf6', bg: '#ede9fe' },
+  { id: 's9',  name: 'Nora Kim',     subject: 'Chemistry',   availability: 'Thu 4:30-5:30', initials: 'NK', color: '#f97316', bg: '#ffedd5' },
+  { id: 's10', name: 'Ethan Cole',   subject: 'Calculus',    availability: 'Tue 4:30-5:30', initials: 'EC', color: '#8b5cf6', bg: '#ede9fe' },
+  { id: 's11', name: 'Layla Hassan', subject: 'Writing',     availability: 'Thu/Sat 3:30-4:30', initials: 'LH', color: '#ec4899', bg: '#fce7f3' },
+  { id: 's12', name: 'Sam Rivera',   subject: 'SAT Math',    availability: 'Wed 5:30 only', initials: 'SR', color: '#0ea5e9', bg: '#e0f2fe' },
+  { id: 's13', name: 'Kai Nguyen',   subject: 'ACT Science', availability: 'Mon 5:30 only', initials: 'KN', color: '#f97316', bg: '#ffedd5' },
+  { id: 's14', name: 'Pia Gonzalez', subject: 'Algebra',     availability: 'Mon/Tue 3:30', initials: 'PG', color: '#0ea5e9', bg: '#e0f2fe' },
 ]
 
 const ASSIGNMENTS: Record<string, { tutorId: string; block: string; day: string }> = {
@@ -304,14 +304,14 @@ export default function ThetixDemo() {
       setExtraPlacement({}); setResultLabel(''); setQuery(''); setSidebarScrollId(null)
       await sleep(1200)
 
-      await typeText('Build schedule for next week', 40)
+      await typeText('Input 14 students with subjects + availability. Build optimal schedule.', 34)
       await sleep(400)
 
       setPhase('scanning')
-      setResultLabel('Analyzing tutor availability…'); await sleep(350)
-      setResultLabel('Matching subjects to students…'); await sleep(350)
-      setResultLabel('Checking capacity constraints…'); await sleep(450)
-      setResultLabel('Generating optimal assignments…'); await sleep(500)
+      setResultLabel('Parsing student inputs…'); await sleep(350)
+      setResultLabel('Applying subject + availability constraints…'); await sleep(420)
+      setResultLabel('Checking tutor fit and slot capacity…'); await sleep(450)
+      setResultLabel('Generating optimal autoschedule…'); await sleep(520)
 
       for (const student of STUDENTS_TO_PLACE) {
         setPhase(`placing-${student.id}`)
@@ -346,7 +346,7 @@ export default function ThetixDemo() {
       await sleep(2000)
 
       // Erase
-      const q1 = 'Build schedule for next week'
+      const q1 = 'Input 14 students with subjects + availability. Build optimal schedule.'
       for (let i = q1.length; i >= 0; i--) { setQuery(q1.slice(0, i)); await sleep(16) }
       setQuery('')
       await sleep(700)
@@ -464,7 +464,7 @@ export default function ThetixDemo() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 14px', borderRadius: 8, background: '#7c3aed', color: 'white', fontSize: 11, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(124,58,237,0.4)', whiteSpace: 'nowrap' }}>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Build Schedule
+              Run AI Autoscheduler
             </div>
           </div>
 
@@ -474,7 +474,7 @@ export default function ThetixDemo() {
             <div style={{ width: 186, borderRight: '1px solid #e8ecf0', background: 'rgba(248,250,252,0.7)', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
               <div style={{ padding: '10px 12px 6px', flexShrink: 0 }}>
                 <div style={{ fontSize: 9, fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-                  {isBuilderPhase ? `Queue · ${STUDENTS_TO_PLACE.length} students` : 'Recent Students'}
+                  {isBuilderPhase ? `Inputs · ${STUDENTS_TO_PLACE.length} students` : 'Recent Students'}
                 </div>
                 {isBuilderPhase && phase !== 'idle' && phase !== 'scanning' && (
                   <div style={{ marginTop: 5, height: 3, borderRadius: 2, background: '#e8ecf0', overflow: 'hidden' }}>
@@ -494,6 +494,7 @@ export default function ThetixDemo() {
                       <div style={{ minWidth: 0, flex: 1 }}>
                         <div style={{ fontSize: 10, fontWeight: 700, color: confirmed ? '#16a34a' : placed ? '#94a3b8' : '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</div>
                         <div style={{ fontSize: 9, color: confirmed ? '#4ade80' : placed ? '#cbd5e1' : '#64748b' }}>{s.subject}</div>
+                        <div style={{ fontSize: 8, color: placed ? '#cbd5e1' : '#94a3b8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.availability}</div>
                       </div>
                       {confirmed && <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>}
                       {active && <div style={{ display: 'flex', gap: 2, flexShrink: 0 }}>{[0,1,2].map(i => <div key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: '#7c3aed', animation: `dot 0.9s ${i * 0.18}s infinite` }} />)}</div>}
