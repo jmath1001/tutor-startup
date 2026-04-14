@@ -14,19 +14,38 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thetix.dev";
+
 export const metadata: Metadata = {
-  title: "Thetix | Agency Scheduling Engine",
-  description: "The high-performance scheduling and matching engine for tutoring agencies. Stop the spreadsheet hunt.",
-  metadataBase: new URL('https://thetix.dev'),
+  title: {
+    default: "Thetix | Tutoring Center Scheduling Software",
+    template: "%s | Thetix",
+  },
+  description:
+    "Scheduling and operations software for tutoring centers. Manage tutors and students, automate reminders, reduce no-shows, and track session history.",
+  keywords: [
+    "tutoring scheduling software",
+    "tutoring center software",
+    "tutor management",
+    "student scheduling",
+    "attendance tracking",
+    "tutoring operations",
+    "education scheduling platform",
+  ],
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Thetix | Agency Command Engine",
-    description: "Scale your tutoring agency without the manual chaos. Precision matching and scheduling.",
-    url: "https://thetix.dev",
+    title: "Thetix | Tutoring Center Scheduling Software",
+    description:
+      "Run tutoring operations in one place: scheduling, reminders, attendance, and student history.",
+    url: siteUrl,
     siteName: "Thetix",
     type: "website",
     images: [
       {
-        url: "/og-image.png", // Ensure this exists in your /public folder for Discord/Twitter previews
+        url: "/og-image.png",
         width: 1200,
         height: 630,
       },
@@ -34,11 +53,23 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thetix | Agency Command Engine",
-    description: "The high-performance scheduling and matching engine for tutoring agencies.",
+    title: "Thetix | Tutoring Center Scheduling Software",
+    description:
+      "Manage tutor schedules, reminders, attendance, and student history in one system.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   icons: {
-    icon: "/favicon.ico", // Or /icon.png
+    icon: "/favicon.ico",
   },
 };
 
@@ -54,7 +85,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // Set to light if you want that high-contrast white look by default
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

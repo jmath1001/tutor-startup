@@ -25,20 +25,20 @@ export default function Features() {
     {
       id: "record",
       icon: <CalendarCheck size={28} className="text-emerald-500" />,
-      label: "AI Autoscheduler",
-      title: "Watch AI build the optimal schedule from constraints",
-      description: "Input students, subjects, and availability, then let AI place sessions by tutor fit, time windows, and capacity without manual reshuffling.",
-      points: ["Constraint-aware placement", "Fewer scheduling errors", "Faster weekly build"],
-      video: "/videos/ai-demo.mp4",
+      label: "Constraint Scoring",
+      title: "See every schedule option ranked by your rules",
+      description: "The schedule builder scores every possible arrangement against your constraints so you can pick the best-fit outcome with confidence.",
+      points: ["No double booking", "Availability-aware matching", "Constraint-by-constraint scoring"],
+      video: "/videos/rearrange.mp4",
     },
     {
       id: "workflow",
       icon: <BellRing size={28} className="text-rose-500" />,
-      label: "Automation",
-      title: "Automate reminders, attendance, and follow-up",
-      description: "Match tutors by subject and availability, trigger reminders automatically, and keep attendance tied to each scheduled session so fewer tasks are done manually.",
-      points: ["Tutor + subject matching", "Automated reminders", "Fewer manual mistakes"],
-      video: "/videos/tracking-demo.mp4",
+      label: "Batch Scheduling",
+      title: "Pack classes tightly without breaking constraints",
+      description: "Generate schedules in batch and maximize utilization while still enforcing tutor/student availability and conflict-free placements.",
+      points: ["High schedule density", "Batch generation at scale", "Conflict-safe placements"],
+      video: "/videos/batch-schedule.mp4",
     },
     {
       id: "automation",
@@ -56,7 +56,7 @@ export default function Features() {
       title: "Scale from one center to franchise and enterprise",
       description: "Keep one consistent system as you expand to multiple centers, with visibility for center leads, regional operators, and HQ.",
       points: ["Cross-center attendance trends", "Available subject slots", "Franchise-ready consistency"],
-      video: "/videos/queries-demo.mp4",
+      video: "/videos/student-management.mp4",
     },
   ], []);
 
@@ -90,10 +90,10 @@ export default function Features() {
           className="max-w-3xl mb-10 sm:mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-slate-900 tracking-tight leading-tight mb-4">
-            Solve fragmented, manual, and error-prone center operations.
+            Build better timetables with constraint-based scheduling.
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl">
-            Switch between workflows to see how centers use Thetix to centralize fragmented processes, automate repetitive work, run AI autoscheduling with constraints, and scale with one operational system.
+            Explore how Thetix scores and compares scheduling options to prevent double booking, match availability, and pack classes as efficiently as possible.
           </p>
         </motion.div>
 
