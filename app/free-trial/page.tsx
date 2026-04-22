@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle, ArrowRight, Loader2, Shield, Clock, MessageCircle } from "lucide-react";
 import { trackEvent } from "@/lib/trackEvent";
 
 type PilotApplicationForm = {
@@ -21,20 +21,20 @@ type PilotApplicationForm = {
 
 const outcomes = [
   {
-    title: "Your tutors always know their schedule",
-    body: "No more 'wait what time is my session?' texts. Every tutor sees their week in real time.",
+    title: "The autoscheduler builds your week for you",
+    body: "Tell the system your tutors, their availability, and what subjects they cover. It places every student session automatically, with zero conflicts.",
   },
   {
-    title: "Students stop missing sessions",
-    body: "They can see exactly when and where their next session is. Fewer no-shows, more billable hours.",
+    title: "Tutors and students see their schedules live",
+    body: "No more 'wait what time is my session?' texts. Every tutor and student portal updates in real time the moment anything changes.",
   },
   {
     title: "Rescheduling takes seconds, not an hour",
-    body: "Tutor cancels last minute? The system instantly shows who's available to cover. Two clicks and it's done.",
+    body: "Tutor cancels last minute? The system instantly shows who's available to cover based on subject and availability. Two clicks and it's done.",
   },
   {
     title: "You stop being the human spreadsheet",
-    body: "Stop being the person who holds all the scheduling knowledge in your head. It's all in one place everyone can see.",
+    body: "All student history, session records, and attendance live in one place. You're not the only one who knows how the schedule works anymore.",
   },
 ];
 
@@ -177,11 +177,11 @@ export default function LearnMorePage() {
             Few pilot spots left
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-            Join the pilot and<br />
-            <span className="text-emerald-500">fix scheduling first.</span>
+            A live scheduling system<br />
+            <span className="text-emerald-500">built for tutoring centers.</span>
           </h1>
           <p className="text-lg text-slate-500 leading-relaxed max-w-xl mx-auto">
-            Start with the biggest pain points now: scheduling chaos, no-shows, and fragmented records. Keep your centralized system and add constraint-aware autoscheduling on top.
+            Thetix is an active product — not a waitlist. It has a running autoscheduler that reads your tutors&apos; availability, subject constraints, and student needs, then builds the schedule for you. Pilot centers are using it right now.
           </p>
         </motion.div>
       </section>
@@ -207,6 +207,49 @@ export default function LearnMorePage() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* What's in the product */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
+        <h2 className="text-2xl font-black text-slate-900 mb-2">What's running in the system</h2>
+        <p className="text-sm text-slate-500 mb-8">These aren&apos;t planned features — they&apos;re live in the pilot right now.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[
+            { label: "Constraint-aware autoscheduler", desc: "Reads tutor availability, subjects, and student needs — builds the full schedule automatically." },
+            { label: "Live tutor + student portals", desc: "Each person sees only their own schedule. Updates the moment you make a change." },
+            { label: "Automated session reminders", desc: "Students and parents get reminders before sessions. No-shows drop immediately." },
+            { label: "Attendance and session history", desc: "Every session logged. Full records per student, searchable and exportable." },
+            { label: "Instant reschedule engine", desc: "When a tutor cancels, the system shows you who can cover — filtered by subject and slot." },
+            { label: "Multi-tutor, multi-subject support", desc: "Handles mixed subject loads, split availability, and overlapping student needs without spreadsheets." },
+          ].map((item, i) => (
+            <div key={i} className="bg-slate-900 text-white rounded-2xl p-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">{item.label}</p>
+              <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Who it's for */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
+          <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-4">This pilot is right for you if</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "You manage 5+ active tutors across sessions",
+              "You're still coordinating schedules by hand or on spreadsheets",
+              "No-shows or last-minute cancellations cost you time every week",
+              "You want a real system before hiring more staff",
+              "You're the only one who knows how the schedule works",
+              "You've tried calendar tools but nothing fits tutoring ops",
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <CheckCircle size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                <span className="text-sm text-slate-700">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -246,15 +289,43 @@ export default function LearnMorePage() {
 
       {/* Email CTA */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-24 sm:pb-32">
+
+        {/* Founder note */}
+        <div className="mb-6 bg-white border border-slate-200 rounded-2xl p-6 flex items-start gap-4">
+          <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center shrink-0 text-white font-black text-sm">T</div>
+          <div>
+            <p className="text-sm font-bold text-slate-900 mb-1">A note from the founder</p>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              I built this because I ran a tutoring center and the scheduling problem never went away no matter what I tried.
+              Every app assumed a clean use case — we never had one. If your situation is messy, that&apos;s exactly what this is built for.
+              Fill out the form and I will personally review your application and reach out within 24 hours.
+            </p>
+          </div>
+        </div>
+
         <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 md:p-14 text-center">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mx-auto mb-6" />
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
             Ready to join the<br />
             <span className="text-emerald-400">current pilot cohort?</span>
           </h2>
-          <p className="text-slate-400 mb-8 leading-relaxed">
-            We prioritize teams with active scheduling complexity. Complete the intake below so we can qualify fit and confirm pilot onboarding.
+          <p className="text-slate-400 mb-6 leading-relaxed">
+            We prioritize teams with active scheduling complexity. Complete the intake below so we can confirm fit and kick off onboarding.
           </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <Clock size={13} className="text-emerald-400" />
+              Reviewed within 24 hours
+            </div>
+            <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <MessageCircle size={13} className="text-emerald-400" />
+              Direct line to founder
+            </div>
+            <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <Shield size={13} className="text-emerald-400" />
+              No contract, no commitment
+            </div>
+          </div>
 
           {!submitted ? (
             <form
@@ -395,7 +466,7 @@ export default function LearnMorePage() {
               </button>
 
               <p className="text-xs text-slate-500 mt-4 text-center">
-                Applications are reviewed for operational fit, scheduling complexity, and implementation readiness.
+                I read every application personally. If it&apos;s not a fit right now, I&apos;ll tell you honestly.
               </p>
             </form>
           ) : (
