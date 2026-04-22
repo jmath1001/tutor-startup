@@ -4,8 +4,20 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
 import { trackEvent } from "@/lib/trackEvent";
+
+type PilotApplicationForm = {
+  fullName: string;
+  email: string;
+  phone: string;
+  centerName: string;
+  role: string;
+  studentsPerWeek: string;
+  tutorsCount: string;
+  timeline: string;
+  biggestPain: string;
+  notes: string;
+};
 
 const outcomes = [
   {
@@ -50,42 +62,87 @@ const faqs = [
 ];
 
 export default function LearnMorePage() {
-  const [email, setEmail] = useState("");
+  const [formData, setFormData] = useState<PilotApplicationForm>({
+    fullName: "",
+    email: "",
+    phone: "",
+    centerName: "",
+    role: "",
+    studentsPerWeek: "",
+    tutorsCount: "",
+    timeline: "",
+    biggestPain: "",
+    notes: "",
+  });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [hasTrackedEmailFocus, setHasTrackedEmailFocus] = useState(false);
+  const [hasTrackedFormFocus, setHasTrackedFormFocus] = useState(false);
 
   useEffect(() => {
     trackEvent("pilot_page_view");
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-    await trackEvent("pilot_submit_click", { placement: "free_trial_form" });
+    await trackEvent("pilot_submit_click", {
+      placement: "free_trial_form",
+      role: formData.role,
+      students_per_week: formData.studentsPerWeek,
+    });
     setLoading(true);
 
     try {
-      const { error } = await supabase.from("waitlist_signups").insert([{
-        email,
-        status: "pending",
-      }]);
+      const response = await fetch("/api/pilot-application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      if (error) {
-        setErrorMessage("We could not submit right now. Please try again in a minute.");
-        await trackEvent("pilot_application_failed", { source: "free_trial", message: error.message });
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => ({}))) as { message?: string };
+        if (payload.message === "invalid_email" || payload.message === "email_required") {
+          setErrorMessage("Please enter a valid email address.");
+        } else if (payload.message === "email_already_exists") {
+          setErrorMessage("This email already has a pilot application on file.");
+        } else {
+          setErrorMessage("We could not submit right now. Please try again in a minute.");
+        }
+        await trackEvent("pilot_application_failed", {
+          source: "free_trial",
+          message: payload.message ?? "request_failed",
+        });
         setLoading(false);
         return;
       }
 
       await trackEvent("pilot_application_submitted", {
         source: "free_trial",
-        email_domain: email.includes("@") ? email.split("@")[1] : "unknown",
+        email_domain: formData.email.includes("@") ? formData.email.split("@")[1] : "unknown",
+        role: formData.role,
+        students_per_week: formData.studentsPerWeek,
       });
       setSubmitted(true);
-      setEmail("");
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        centerName: "",
+        role: "",
+        studentsPerWeek: "",
+        tutorsCount: "",
+        timeline: "",
+        biggestPain: "",
+        notes: "",
+      });
     } catch (err) {
       console.error("Error:", err);
       setErrorMessage("Something went wrong submitting the form. Please try again.");
@@ -195,39 +252,151 @@ export default function LearnMorePage() {
             Ready to join the<br />
             <span className="text-emerald-400">current pilot cohort?</span>
           </h2>
-          <p className="text-slate-400 mb-10 leading-relaxed">
-            Drop your email and we will reach out with pilot next steps. This is for centers actively validating autoscheduling and centralized operations.
+          <p className="text-slate-400 mb-8 leading-relaxed">
+            We prioritize teams with active scheduling complexity. Complete the intake below so we can qualify fit and confirm pilot onboarding.
           </p>
 
           {!submitted ? (
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              className="max-w-2xl mx-auto text-left"
             >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onFocus={() => {
-                  if (!hasTrackedEmailFocus) {
-                    setHasTrackedEmailFocus(true);
-                    trackEvent("pilot_email_focus", { source: "free_trial" });
-                  }
-                }}
-                placeholder="you@tutoringcenter.com"
-                className="flex-1 h-14 px-5 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  name="fullName"
+                  required
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  onFocus={() => {
+                    if (!hasTrackedFormFocus) {
+                      setHasTrackedFormFocus(true);
+                      trackEvent("pilot_intake_focus", { source: "free_trial" });
+                    }
+                  }}
+                  placeholder="Full name"
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Work email"
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone number"
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+                <input
+                  type="text"
+                  name="centerName"
+                  required
+                  value={formData.centerName}
+                  onChange={handleChange}
+                  placeholder="Center or business name"
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+
+                <select
+                  name="role"
+                  required
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                >
+                  <option value="" className="text-slate-900">Your role</option>
+                  <option value="owner" className="text-slate-900">Owner / Founder</option>
+                  <option value="director" className="text-slate-900">Center Director</option>
+                  <option value="operations" className="text-slate-900">Operations Manager</option>
+                  <option value="scheduler" className="text-slate-900">Scheduler / Admin</option>
+                </select>
+
+                <select
+                  name="studentsPerWeek"
+                  required
+                  value={formData.studentsPerWeek}
+                  onChange={handleChange}
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                >
+                  <option value="" className="text-slate-900">Active students / week</option>
+                  <option value="1-20" className="text-slate-900">1-20</option>
+                  <option value="21-50" className="text-slate-900">21-50</option>
+                  <option value="51-100" className="text-slate-900">51-100</option>
+                  <option value="101-250" className="text-slate-900">101-250</option>
+                  <option value="250+" className="text-slate-900">250+</option>
+                </select>
+
+                <select
+                  name="tutorsCount"
+                  required
+                  value={formData.tutorsCount}
+                  onChange={handleChange}
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                >
+                  <option value="" className="text-slate-900">Tutors on team</option>
+                  <option value="1-5" className="text-slate-900">1-5</option>
+                  <option value="6-15" className="text-slate-900">6-15</option>
+                  <option value="16-30" className="text-slate-900">16-30</option>
+                  <option value="31+" className="text-slate-900">31+</option>
+                </select>
+
+                <select
+                  name="timeline"
+                  required
+                  value={formData.timeline}
+                  onChange={handleChange}
+                  className="h-12 px-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                >
+                  <option value="" className="text-slate-900">When do you want this live?</option>
+                  <option value="asap" className="text-slate-900">ASAP (this month)</option>
+                  <option value="30-60-days" className="text-slate-900">In 30-60 days</option>
+                  <option value="this-quarter" className="text-slate-900">This quarter</option>
+                  <option value="exploring" className="text-slate-900">Just exploring</option>
+                </select>
+              </div>
+
+              <div className="mt-3 space-y-3">
+                <textarea
+                  name="biggestPain"
+                  required
+                  value={formData.biggestPain}
+                  onChange={handleChange}
+                  rows={3}
+                  placeholder="What is your biggest scheduling or no-show bottleneck right now?"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+                <textarea
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleChange}
+                  rows={2}
+                  placeholder="Anything else we should know before reviewing your pilot application?"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}
-                className="h-14 px-8 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm uppercase tracking-widest rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 group shrink-0"
+                className="mt-4 h-14 w-full px-8 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm uppercase tracking-widest rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 group"
               >
                 {loading
                   ? <Loader2 size={18} className="animate-spin" />
-                  : <><span>Join Pilot</span><ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
+                  : <><span>Apply For Pilot</span><ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
                 }
               </button>
+
+              <p className="text-xs text-slate-500 mt-4 text-center">
+                Applications are reviewed for operational fit, scheduling complexity, and implementation readiness.
+              </p>
             </form>
           ) : (
             <motion.div
