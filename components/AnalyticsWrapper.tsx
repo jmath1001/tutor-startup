@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { trackEvent } from "@/lib/supabase";
+import { trackEvent } from "@/lib/trackEvent";
 
 export default function AnalyticsWrapper({ name, children }: { name: string, children: React.ReactNode }) {
   const startTime = useRef<number | null>(null);

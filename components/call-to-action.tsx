@@ -50,11 +50,11 @@ export default function CallToAction() {
             {/* Headline */}
             <div className="space-y-4 max-w-2xl">
               <h2 className="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[0.95]">
-                Meet your operations copilot.
-                Run everything in one platform.
+                Join the pilot.
+                Validate outcomes in your center.
               </h2>
               <p className="text-slate-600 text-lg font-medium leading-relaxed">
-                Book a 30-minute demo and see how Thetix connects fragmented workflows, removes repetitive manual work, and uses constraint-aware AI autoscheduling in one centralized platform.
+                Start with your biggest pain points first: scheduling chaos, no-shows, and fragmented records. Thetix combines constraint-aware autoscheduling with one centralized operating layer.
               </p>
             </div>
 
@@ -83,13 +83,20 @@ export default function CallToAction() {
             {/* CTA */}
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <Link
-                href="/book-demo"
-                onClick={() => trackEvent("bottom_cta_click")}
+                href="/free-trial"
+                onClick={() => trackEvent("bottom_join_pilot_click")}
                 className="inline-flex items-center justify-center gap-2 h-14 px-10 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-none transition-all active:scale-95 shadow-lg group"
               >
-                Book Demo <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                Join Pilot <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <p className="text-slate-500 text-xs font-medium">No commitment. No card. Just a concrete plan and live walkthrough.</p>
+              <Link
+                href="/book-demo"
+                onClick={() => trackEvent("bottom_book_demo_click")}
+                className="inline-flex items-center justify-center h-14 px-8 border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-[0.14em] rounded-none transition-all"
+              >
+                Book Demo
+              </Link>
+              <p className="text-slate-500 text-xs font-medium">Pilot first for fast validation, or book a walkthrough if you want a deep dive.</p>
             </div>
 
           </div>

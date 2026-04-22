@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
 import { CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { trackEvent } from '@/lib/trackEvent';
 
 export default function BookDemoPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function BookDemoPage() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,20 +24,26 @@ export default function BookDemoPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
+    await trackEvent('book_demo_submit_click');
     setLoading(true);
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('demo_requests')
         .insert([formData]);
 
       if (error) {
         console.error('Supabase error:', error);
+        setErrorMessage('We could not submit right now. Please try again in a minute.');
+        await trackEvent('book_demo_submit_failed', { message: error.message });
         setLoading(false);
         return;
       }
 
-      console.log('Saved demo request:', data);
+      await trackEvent('book_demo_submitted', {
+        email_domain: formData.email.includes('@') ? formData.email.split('@')[1] : 'unknown',
+      });
       setSubmitted(true);
       setLoading(false);
 
@@ -46,12 +54,14 @@ export default function BookDemoPage() {
       }, 2000);
     } catch (err) {
       console.error(err);
+      setErrorMessage('Something went wrong submitting the form. Please try again.');
+      await trackEvent('book_demo_submit_failed', { message: 'unexpected_exception' });
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen py-16 bg-zinc-50 dark:bg-zinc-950 px-6 flex flex-col items-center">
+    <main className="min-h-screen py-12 sm:py-16 bg-zinc-50 dark:bg-zinc-950 px-4 sm:px-6 flex flex-col items-center">
       {/* Back Arrow */}
       <div className="w-full max-w-3xl mb-6">
         <Link href="/" className="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
@@ -74,7 +84,7 @@ export default function BookDemoPage() {
         {!submitted ? (
           <form
             onSubmit={handleSubmit}
-            className="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-xl flex flex-col gap-4"
+            className="bg-white dark:bg-zinc-900 p-5 sm:p-8 rounded-xl shadow-xl flex flex-col gap-4"
           >
             <input
               type="text"
@@ -114,6 +124,8 @@ export default function BookDemoPage() {
             <Button type="submit" disabled={loading} className="mt-2 w-full">
               {loading ? 'Submitting...' : 'Book Demo'}
             </Button>
+
+            {!!errorMessage && <p className="text-sm text-red-600 dark:text-red-400">{errorMessage}</p>}
           </form>
         ) : (
           <div className="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-xl flex flex-col items-center gap-4">
@@ -128,9 +140,13 @@ export default function BookDemoPage() {
       {/* Bottom Call to Action */}
       <section className="max-w-3xl text-center mt-12">
         <p className="text-lg text-zinc-600 dark:text-zinc-400">
-          Ready to dive into a trial?{' '}
-          <Link href="/free-trial" className="text-blue-600 dark:text-blue-400 hover:underline">
-            Start your free trial
+          Need faster validation?{' '}
+          <Link
+            href="/free-trial"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+            onClick={() => trackEvent('book_demo_join_pilot_click')}
+          >
+            Join pilot
           </Link>
         </p>
       </section>

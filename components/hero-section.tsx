@@ -498,7 +498,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed"
               >
-                Centers often run on fragmented, unreliable systems with repetitive manual work and frequent logging mistakes. Thetix unifies scheduling, attendance, reminders, communication, and history into one operating layer, with AI autoscheduling that optimizes tutor match, availability, capacity, and time constraints.
+                Most centers lose hours every week to spreadsheet scheduling, no-show cleanup, and scattered student records. Thetix combines a constraint-aware auto scheduler with one centralized system for attendance, reminders, communication, and history.
               </motion.p>
 
               <motion.p
@@ -514,17 +514,28 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-3"
               >
-                <Button
-                  asChild
-                  className="bg-black text-white font-medium px-8 py-3 hover:bg-gray-800 transition-colors w-fit"
-                >
-                  <Link href="/book-demo" onClick={() => trackEvent("hero_cta_click")}>
-                    Book Demo
-                  </Link>
-                </Button>
-                <p className="text-xs text-gray-400">See a live walkthrough tailored to your centers.</p>
+                <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+                  <Button
+                    asChild
+                    className="bg-black text-white font-medium px-8 py-3 hover:bg-gray-800 transition-colors w-fit"
+                  >
+                    <Link href="/free-trial" onClick={() => trackEvent("hero_join_pilot_click")}>
+                      Join Pilot
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="font-medium px-8 py-3 w-fit"
+                  >
+                    <Link href="/book-demo" onClick={() => trackEvent("hero_book_demo_click")}>
+                      Book Demo
+                    </Link>
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-400">Join pilot to validate fit quickly, or book a tailored walkthrough.</p>
               </motion.div>
 
               <motion.div
@@ -534,10 +545,10 @@ export default function HeroSection() {
                 className="flex flex-wrap gap-2 sm:gap-3"
               >
                 {[
-                  "Connect fragmented operational workflows",
-                  "Replace repetitive manual record keeping",
+                  "Stop spreadsheet scheduling chaos",
+                  "Reduce no-shows with automated reminders",
                   "Constraint-aware AI autoscheduling",
-                  "Reliable tracking and student history",
+                  "Reliable attendance and student history",
                 ].map((text) => (
                   <div key={text} className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-50 border border-gray-200">
                     <CheckCircle2 size={12} className="text-black" />

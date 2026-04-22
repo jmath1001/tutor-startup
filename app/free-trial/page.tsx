@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, CheckCircle, ArrowRight, Loader2 } from "lucide-react";
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "How long does it take to get set up?",
-    a: "Most agencies are fully live by the end of the onboarding call. We do the heavy lifting — you just show up and confirm everything looks right.",
+    a: "Most tutoring centers are fully live by the end of the onboarding call. We do the heavy lifting — you just show up and confirm everything looks right.",
   },
   {
     q: "Will my tutors actually use this?",
@@ -54,20 +54,44 @@ export default function LearnMorePage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [hasTrackedEmailFocus, setHasTrackedEmailFocus] = useState(false);
+
+  useEffect(() => {
+    trackEvent("pilot_page_view");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+    await trackEvent("pilot_submit_click", { placement: "free_trial_form" });
     setLoading(true);
+
     try {
-      await supabase.from("waitlist_signups").insert([{
+      const { error } = await supabase.from("waitlist_signups").insert([{
         email,
         status: "pending",
       }]);
-      await trackEvent("learn_more_email_submit", { email });
+
+      if (error) {
+        setErrorMessage("We could not submit right now. Please try again in a minute.");
+        await trackEvent("pilot_application_failed", { source: "free_trial", message: error.message });
+        setLoading(false);
+        return;
+      }
+
+      await trackEvent("pilot_application_submitted", {
+        source: "free_trial",
+        email_domain: email.includes("@") ? email.split("@")[1] : "unknown",
+      });
       setSubmitted(true);
+      setEmail("");
     } catch (err) {
       console.error("Error:", err);
+      setErrorMessage("Something went wrong submitting the form. Please try again.");
+      await trackEvent("pilot_application_failed", { source: "free_trial", message: "unexpected_exception" });
     }
+
     setLoading(false);
   };
 
@@ -75,7 +99,7 @@ export default function LearnMorePage() {
     <main className="bg-white min-h-screen">
 
       {/* Nav */}
-      <nav className="max-w-5xl mx-auto px-6 py-6">
+      <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors group text-sm font-medium"
@@ -86,24 +110,27 @@ export default function LearnMorePage() {
       </nav>
 
       {/* Hero */}
-      <section className="max-w-3xl mx-auto px-6 pt-8 pb-20 text-center">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-16 sm:pb-20 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-            Here's exactly<br />
-            <span className="text-emerald-500">what changes.</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-5">
+            Few pilot spots left
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+            Join the pilot and<br />
+            <span className="text-emerald-500">fix scheduling first.</span>
           </h1>
           <p className="text-lg text-slate-500 leading-relaxed max-w-xl mx-auto">
-            You clicked learn more because something on that page sounded familiar. Here's what your agency looks like once the scheduling chaos is gone.
+            Start with the biggest pain points now: scheduling chaos, no-shows, and fragmented records. Keep your centralized system and add constraint-aware autoscheduling on top.
           </p>
         </motion.div>
       </section>
 
       {/* Outcomes */}
-      <section className="max-w-3xl mx-auto px-6 pb-24">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
         <div className="space-y-4">
           {outcomes.map((item, i) => (
             <motion.div
@@ -127,7 +154,7 @@ export default function LearnMorePage() {
       </section>
 
       {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-6 pb-24">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-20 sm:pb-24">
         <h2 className="text-2xl font-black text-slate-900 mb-8">Common questions</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
@@ -161,15 +188,15 @@ export default function LearnMorePage() {
       </section>
 
       {/* Email CTA */}
-      <section className="max-w-3xl mx-auto px-6 pb-32">
-        <div className="bg-slate-900 rounded-3xl p-10 md:p-14 text-center">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-24 sm:pb-32">
+        <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 md:p-14 text-center">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
-            Ready to book your<br />
-            <span className="text-emerald-400">free migration call?</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
+            Ready to join the<br />
+            <span className="text-emerald-400">current pilot cohort?</span>
           </h2>
           <p className="text-slate-400 mb-10 leading-relaxed">
-            Drop your email and we'll reach out to schedule. 30 minutes, we handle everything, no commitment.
+            Drop your email and we will reach out with pilot next steps. This is for centers actively validating autoscheduling and centralized operations.
           </p>
 
           {!submitted ? (
@@ -182,6 +209,12 @@ export default function LearnMorePage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={() => {
+                  if (!hasTrackedEmailFocus) {
+                    setHasTrackedEmailFocus(true);
+                    trackEvent("pilot_email_focus", { source: "free_trial" });
+                  }
+                }}
                 placeholder="you@tutoringcenter.com"
                 className="flex-1 h-14 px-5 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
               />
@@ -192,7 +225,7 @@ export default function LearnMorePage() {
               >
                 {loading
                   ? <Loader2 size={18} className="animate-spin" />
-                  : <><span>Book My Call</span><ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
+                  : <><span>Join Pilot</span><ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></>
                 }
               </button>
             </form>
@@ -206,9 +239,22 @@ export default function LearnMorePage() {
                 <CheckCircle size={28} className="text-emerald-400" />
               </div>
               <p className="text-white font-bold text-lg">You're in.</p>
-              <p className="text-slate-400 text-sm">We'll reach out within 24 hours to schedule your call.</p>
+              <p className="text-slate-400 text-sm">We'll reach out within 24 hours with pilot onboarding details.</p>
             </motion.div>
           )}
+
+          {!!errorMessage && <p className="text-red-300 text-sm mt-4">{errorMessage}</p>}
+
+          <p className="text-xs text-slate-500 mt-6">
+            Want a walkthrough first?{" "}
+            <Link
+              href="/book-demo"
+              className="text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
+              onClick={() => trackEvent("pilot_page_book_demo_click")}
+            >
+              Book demo
+            </Link>
+          </p>
 
           <p className="text-xs text-slate-600 mt-6">No spam. No commitment. Just a conversation.</p>
         </div>

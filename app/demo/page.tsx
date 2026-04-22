@@ -68,7 +68,7 @@ type ExtraStudent = { name: string; subject: string; color: string; studentId: s
 
 function ContactPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 400, animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
+    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 'min(400px, calc(100vw - 24px))', animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
       <div style={{ background: 'linear-gradient(135deg, #f5f3ff, #ede9fe)', padding: '18px 20px', borderBottom: '1px solid #e8ecf0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{ width: 44, height: 44, borderRadius: 12, background: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 800, color: 'white' }}>MP</div>
@@ -136,7 +136,7 @@ function HistoryPanel({ onClose }: { onClose: () => void }) {
                         { bg: '#f8fafc', color: '#94a3b8', label: 'Cancelled' }
 
   return (
-    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 420, animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
+    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 'min(420px, calc(100vw - 24px))', animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
       <div style={{ padding: '16px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 36, height: 36, borderRadius: 10, background: '#f5f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#7c3aed' }}>MP</div>
         <div>
@@ -178,7 +178,7 @@ function NoShowPanel({ onClose }: { onClose: () => void }) {
     { name: 'Isla Torres',  subject: 'English',   tutor: 'Kate Jung',   day: 'Sat 4/12', time: '4:30p', initials: 'IT', color: '#ec4899', bg: '#fce7f3' },
   ]
   return (
-    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 400, animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
+    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.18)', width: 'min(400px, calc(100vw - 24px))', animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)', overflow: 'hidden' }}>
       <div style={{ padding: '14px 18px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 32, height: 32, borderRadius: 9, background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -214,7 +214,7 @@ function NoShowPanel({ onClose }: { onClose: () => void }) {
 
 function ConfirmPanel({ extraPlacements }: { extraPlacements: Record<string, ExtraStudent[]> }) {
   return (
-    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.2)', padding: 22, width: 440, maxHeight: '75vh', display: 'flex', flexDirection: 'column', animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)' }}>
+    <div style={{ background: 'white', borderRadius: 18, border: '1px solid #e8ecf0', boxShadow: '0 40px 80px rgba(0,0,0,0.2)', padding: 22, width: 'min(440px, calc(100vw - 24px))', maxHeight: '75vh', display: 'flex', flexDirection: 'column', animation: 'slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <div style={{ width: 34, height: 34, borderRadius: 10, background: '#f5f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -422,7 +422,7 @@ export default function ThetixDemo() {
     <>
       {/* Fixed overlay — renders OUTSIDE the card, never clipped */}
       {overlay !== 'none' && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(15,23,42,0.35)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.2s ease' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(15,23,42,0.35)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.2s ease', padding: 12 }}>
           {overlay === 'confirm' && <ConfirmPanel extraPlacements={extraPlacements} />}
           {overlay === 'contact' && <ContactPanel onClose={() => setOverlay('none')} />}
           {overlay === 'history' && <HistoryPanel onClose={() => setOverlay('none')} />}
@@ -430,7 +430,7 @@ export default function ThetixDemo() {
         </div>
       )}
 
-      <div style={{ width: '100vw', height: '100vh', background: 'linear-gradient(135deg, #e8f4fd 0%, #f0ebff 35%, #fdf2ff 60%, #e8f8f2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"DM Sans", ui-sans-serif, system-ui, sans-serif', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ width: '100%', minHeight: '100vh', background: 'linear-gradient(135deg, #e8f4fd 0%, #f0ebff 35%, #fdf2ff 60%, #e8f8f2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"DM Sans", ui-sans-serif, system-ui, sans-serif', overflow: 'hidden', position: 'relative' }}>
 
         {/* Grid texture */}
         <div style={{ position: 'absolute', inset: 0, opacity: 0.35, backgroundImage: `linear-gradient(rgba(124,58,237,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.07) 1px, transparent 1px)`, backgroundSize: '44px 44px' }} />

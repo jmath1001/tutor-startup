@@ -132,7 +132,7 @@ export default function CalendarZoomSection() {
               />
               <OnboardingPoint 
                 title="Reality-First Management"
-                text="Running an agency is messy. We give you a clear view of your backup options so a sick call doesn't ruin your entire week."
+                text="Running a tutoring center is messy. We give you a clear view of your backup options so a sick call doesn't ruin your entire week."
               />
             </div>
           </div>
