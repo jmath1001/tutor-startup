@@ -1,5 +1,5 @@
+// Main site CTA (same design, main-site content)
 'use client';
-
 import { ArrowRight, Zap, MessageSquare, CalendarCheck, Shield } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -85,12 +85,20 @@ export default function CallToAction({ content }: { content?: any }) {
             {/* CTA */}
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <Link
-                href="/individual-portal"
-                onClick={() => trackEvent("individual_access_portal_click")}
+                href="/free-trial"
+                onClick={() => trackEvent("bottom_join_pilot_click")}
                 className="inline-flex items-center justify-center gap-2 h-14 px-10 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs uppercase tracking-[0.16em] rounded-none transition-all active:scale-95 shadow-lg group"
               >
-                Access Portal <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                Join Pilot <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+              <Link
+                href="/book-demo"
+                onClick={() => trackEvent("bottom_book_demo_click")}
+                className="inline-flex items-center justify-center h-14 px-8 border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-[0.14em] rounded-none transition-all"
+              >
+                Book Demo
+              </Link>
+              <p className="text-slate-500 text-xs font-medium">Pilot first for fast validation, or book a walkthrough if you want a deep dive.</p>
             </div>
 
           </div>

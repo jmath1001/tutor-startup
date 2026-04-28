@@ -1,5 +1,5 @@
+// Main site CredibilitySection (same design, main-site content)
 'use client';
-
 import React from "react";
 import { motion } from "framer-motion";
 

@@ -457,16 +457,28 @@ function HeroDemo() {
 
 // ── Hero page ─────────────────────────────────────────────────────────────────
 
-export default function HeroSection() {
+export default function HeroSection({ content }: { content?: any }) {
+  // Fallback to default content if not provided
+  const hero = content || {
+    title: "AI scheduling and centralized operations for tutoring centers.",
+    subtitle: "Feed in your tutors, their subjects, and their availability. Thetix calculates every constraint across every student simultaneously and builds a conflict-free schedule automatically — so you stop doing the math in your head. Then it runs the rest of your operation: live portals, reminders, attendance, and student history all in one place.",
+    cta: "Join Pilot",
+    secondary: "Book Demo",
+    highlights: [
+      "Autoscheduler: builds your week automatically",
+      "Live portals for every tutor and student",
+      "Automated reminders that cut no-shows",
+      "Centralized attendance, records, and history",
+    ],
+    note: "Join pilot to validate fit quickly, or book a tailored walkthrough.",
+  };
   return (
     <>
-      <HeroHeader />
+      <HeroHeader links={content?.headerLinks} />
       <main className="relative bg-white min-h-screen pt-18 flex flex-col justify-center">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.16),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(16,185,129,0.14),transparent_45%),radial-gradient(circle_at_50%_85%,rgba(99,102,241,0.12),transparent_50%)]" />
-
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 py-5 sm:py-6 md:py-8 lg:py-10">
           <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 sm:gap-8 lg:gap-10 items-center lg:min-h-[calc(100vh-132px)]">
-
             {/* Left — text */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -482,34 +494,32 @@ export default function HeroSection() {
               >
                 Active now · Pilot open
               </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tight leading-tight"
               >
-                AI scheduling and centralized operations for tutoring centers.
+                {hero.title}
               </motion.h1>
-
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed"
               >
-                Feed in your tutors, their subjects, and their availability. Thetix calculates every constraint across every student simultaneously and builds a conflict-free schedule automatically — so you stop doing the math in your head. Then it runs the rest of your operation: live portals, reminders, attendance, and student history all in one place.
+                {hero.subtitle}
               </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="text-sm text-gray-500 font-medium"
-              >
-                Built for single centers, multi-location groups, and franchise networks that need one operating standard.
-              </motion.p>
-
+              {hero.note && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="text-sm text-gray-500 font-medium"
+                >
+                  {hero.note}
+                </motion.p>
+              )}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -521,35 +531,30 @@ export default function HeroSection() {
                     asChild
                     className="bg-black text-white font-medium px-8 py-3 hover:bg-gray-800 transition-colors w-fit"
                   >
-                    <Link href="/free-trial" onClick={() => trackEvent("hero_join_pilot_click")}>
-                      Join Pilot
-                    </Link>
+<Link href={hero.ctaHref ?? "/free-trial"} onClick={() => trackEvent("hero_join_pilot_click")}>{hero.cta}</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
                     className="font-medium px-8 py-3 w-fit"
                   >
-                    <Link href="/book-demo" onClick={() => trackEvent("hero_book_demo_click")}>
-                      Book Demo
-                    </Link>
+<Link href={hero.secondaryHref ?? "/book-demo"} onClick={() => trackEvent("hero_book_demo_click")}>{hero.secondary}</Link>
                   </Button>
                 </div>
-                <p className="text-xs text-gray-400">Join pilot to validate fit quickly, or book a tailored walkthrough.</p>
+                <p className="text-xs text-gray-400">{hero.note}</p>
               </motion.div>
-
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="flex flex-wrap gap-2 sm:gap-3"
               >
-                {[
+                {(hero.highlights || [
                   "Autoscheduler: builds your week automatically",
                   "Live portals for every tutor and student",
                   "Automated reminders that cut no-shows",
                   "Centralized attendance, records, and history",
-                ].map((text) => (
+                ]).map((text: string) => (
                   <div key={text} className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-50 border border-gray-200">
                     <CheckCircle2 size={12} className="text-black" />
                     <span className="text-xs sm:text-sm font-medium text-gray-700">{text}</span>
@@ -557,7 +562,6 @@ export default function HeroSection() {
                 ))}
               </motion.div>
             </motion.div>
-
             {/* Right — simulation */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -578,7 +582,6 @@ export default function HeroSection() {
                 <HeroDemo />
               </div>
             </motion.div>
-
           </div>
         </div>
       </main>

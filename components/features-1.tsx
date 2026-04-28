@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { CalendarCheck, BellRing, RotateCcw, TrendingDown } from "lucide-react";
 
 const FeatureVideo = ({ src }: { src: string }) => (
-  <div className="relative w-full h-full min-h-[220px] sm:min-h-[320px] bg-slate-100 rounded-none overflow-hidden border border-slate-300 shadow-2xl">
+  <div className="relative w-full h-full min-h-55 sm:min-h-80 bg-slate-100 rounded-none overflow-hidden border border-slate-300 shadow-2xl">
     <video
       key={src}
       autoPlay
@@ -20,8 +20,8 @@ const FeatureVideo = ({ src }: { src: string }) => (
   </div>
 );
 
-export default function Features() {
-  const features = React.useMemo(() => [
+export default function Features({ features: featuresProp }: { features?: any[] }) {
+  const defaultFeatures = React.useMemo(() => [
     {
       id: "record",
       icon: <CalendarCheck size={28} className="text-emerald-500" />,
@@ -59,7 +59,7 @@ export default function Features() {
       video: "/videos/student-management.mp4",
     },
   ], []);
-
+  const features = featuresProp || defaultFeatures;
   const [activeTab, setActiveTab] = React.useState(features[0].id);
   const activeFeature = features.find((feature) => feature.id === activeTab) ?? features[0];
 
@@ -105,7 +105,7 @@ export default function Features() {
                 onClick={() => setActiveTab(feature.id)}
                 className={`w-full text-left rounded-none border px-3 sm:px-4 py-3 sm:py-4 transition-all ${
                   activeTab === feature.id
-                    ? "border-sky-300 bg-gradient-to-r from-sky-100 to-emerald-100 text-slate-900 shadow-[0_8px_25px_rgba(14,165,233,0.12)]"
+                    ? "border-sky-300 bg-linear-to-r from-sky-100 to-emerald-100 text-slate-900 shadow-[0_8px_25px_rgba(14,165,233,0.12)]"
                     : "border-slate-300 bg-slate-100/90 text-slate-700 hover:border-sky-200 hover:bg-slate-100"
                 }`}
               >
@@ -151,7 +151,7 @@ export default function Features() {
               </div>
 
               <motion.div whileHover={{ scale: 1.005 }} className="w-full">
-                <div className="relative w-full h-[260px] sm:h-[340px] md:h-[500px] xl:h-[560px]">
+                <div className="relative w-full h-65 sm:h-85 md:h-125 xl:h-140">
                   <FeatureVideo src={activeFeature.video} />
                 </div>
               </motion.div>

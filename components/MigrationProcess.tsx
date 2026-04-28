@@ -4,49 +4,47 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FileSpreadsheet, PhoneCall, Rocket, ShieldCheck } from "lucide-react";
 
-const steps = [
-  {
-    number: "01",
-    icon: <FileSpreadsheet size={24} />,
-    title: "Keep your current data",
-    description:
-      "Spreadsheet, CRM export, or legacy system data - we map it into Thetix so your center starts with clean, consistent records.",
-    callout: "No data reset required.",
-  },
-  {
-    number: "02",
-    icon: <PhoneCall size={24} />,
-    title: "Launch plan that fits your stage",
-    description:
-      "Start quickly as one center, or align regional controls and milestones for franchise and enterprise adoption.",
-    callout: "Start simple, scale with structure.",
-  },
-  {
-    number: "03",
-    icon: <ShieldCheck size={24} />,
-    title: "Validate workflows before go-live",
-    description:
-      "Review schedules, confirm tutor and student mappings, and test reminders, attendance, and history workflows before launch.",
-    callout: "Go live with operational confidence.",
-  },
-  {
-    number: "04",
-    icon: <Rocket size={24} />,
-    title: "Post-launch support as you grow",
-    description:
-      "Monitor adoption, resolve edge cases, and keep processes consistent as you add tutors, students, and additional centers.",
-    callout: "Support for every growth stage.",
-  },
-];
-
-export default function MigrationProcess() {
+export default function MigrationProcess({ steps: stepsProp }: { steps?: any[] }) {
+  const defaultSteps = [
+    {
+      number: "01",
+      icon: <FileSpreadsheet size={24} />,
+      title: "Keep your current data",
+      description:
+        "Spreadsheet, CRM export, or legacy system data - we map it into Thetix so your center starts with clean, consistent records.",
+      callout: "No data reset required.",
+    },
+    {
+      number: "02",
+      icon: <PhoneCall size={24} />,
+      title: "Launch plan that fits your stage",
+      description:
+        "Start quickly as one center, or align regional controls and milestones for franchise and enterprise adoption.",
+      callout: "Start simple, scale with structure.",
+    },
+    {
+      number: "03",
+      icon: <ShieldCheck size={24} />,
+      title: "Validate workflows before go-live",
+      description:
+        "Review schedules, confirm tutor and student mappings, and test reminders, attendance, and history workflows before launch.",
+      callout: "Go live with operational confidence.",
+    },
+    {
+      number: "04",
+      icon: <Rocket size={24} />,
+      title: "Post-launch support as you grow",
+      description:
+        "Monitor adoption, resolve edge cases, and keep processes consistent as you add tutors, students, and additional centers.",
+      callout: "Support for every growth stage.",
+    },
+  ];
+  const steps = stepsProp || defaultSteps;
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(56,189,248,0.16),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(16,185,129,0.14),transparent_36%),radial-gradient(circle_at_50%_100%,rgba(99,102,241,0.09),transparent_44%)]" />
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none ai-grid" />
-
       <div className="relative z-10 mx-auto max-w-6xl px-6">
-
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
