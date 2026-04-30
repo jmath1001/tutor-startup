@@ -13,12 +13,15 @@ export default function BookDemoPage() {
     email: '',
     company: '',
     notes: '',
+    orgType: 'individual', // 'individual' or 'center'
+    studentCount: '',
+    tutorCount: '',
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -49,7 +52,7 @@ export default function BookDemoPage() {
 
       // Reset form after 2 seconds
       setTimeout(() => {
-        setFormData({ name: '', email: '', company: '', notes: '' });
+              setFormData({ name: '', email: '', company: '', notes: '', orgType: 'individual', studentCount: '', tutorCount: '' });
         setSubmitted(false);
       }, 2000);
     } catch (err) {
@@ -95,6 +98,38 @@ export default function BookDemoPage() {
               required
               className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 text-zinc-900 dark:text-white bg-white dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <select
+              name="orgType"
+              value={formData.orgType}
+              onChange={handleChange}
+              required
+              className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 text-zinc-900 dark:text-white bg-white dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="individual">Solo Tutor</option>
+              <option value="center">Tutoring Center</option>
+            </select>
+            <input
+              type="number"
+              name="studentCount"
+              placeholder="Number of Students"
+              value={formData.studentCount}
+              onChange={handleChange}
+              min="1"
+              required
+              className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 text-zinc-900 dark:text-white bg-white dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {formData.orgType === 'center' && (
+              <input
+                type="number"
+                name="tutorCount"
+                placeholder="Number of Tutors"
+                value={formData.tutorCount}
+                onChange={handleChange}
+                min="1"
+                required
+                className="border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 text-zinc-900 dark:text-white bg-white dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            )}
             <input
               type="email"
               name="email"

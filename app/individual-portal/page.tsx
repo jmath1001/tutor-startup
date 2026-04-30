@@ -4,9 +4,17 @@ import { useState } from "react";
 
 type Mode = "register" | "login";
 
+
 export default function TutorPortalPage() {
   const [mode, setMode] = useState<Mode>("register");
-  const [form, setForm] = useState({ name: "", email: "", subject: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    orgType: "individual", // 'individual' or 'center'
+    studentCount: "",
+    tutorCount: "",
+  });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -174,14 +182,46 @@ export default function TutorPortalPage() {
                 </button>
               </div>
 
+
               {mode === "register" && (
-                <div className="field">
-                  <label className="label">Full name</label>
-                  <input
-                    className="input" type="text" placeholder="Jane Smith"
-                    value={form.name} onChange={(e) => set("name", e.target.value)}
-                  />
-                </div>
+                <>
+                  <div className="field">
+                    <label className="label">Full name</label>
+                    <input
+                      className="input" type="text" placeholder="Jane Smith"
+                      value={form.name} onChange={(e) => set("name", e.target.value)}
+                    />
+                  </div>
+                  <div className="field">
+                    <label className="label">Are you a solo tutor or a center?</label>
+                    <select
+                      className="input"
+                      value={form.orgType}
+                      onChange={e => set("orgType", e.target.value)}
+                    >
+                      <option value="individual">Solo Tutor</option>
+                      <option value="center">Tutoring Center</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label className="label">Number of students</label>
+                    <input
+                      className="input" type="number" min="1" placeholder="e.g. 20"
+                      value={form.studentCount}
+                      onChange={e => set("studentCount", e.target.value)}
+                    />
+                  </div>
+                  {form.orgType === "center" && (
+                    <div className="field">
+                      <label className="label">Number of tutors</label>
+                      <input
+                        className="input" type="number" min="1" placeholder="e.g. 5"
+                        value={form.tutorCount}
+                        onChange={e => set("tutorCount", e.target.value)}
+                      />
+                    </div>
+                  )}
+                </>
               )}
 
               <div className="field">
